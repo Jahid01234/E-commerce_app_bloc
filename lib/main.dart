@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:bloc_ecommerce_app/app.dart';
 import 'package:bloc_ecommerce_app/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
