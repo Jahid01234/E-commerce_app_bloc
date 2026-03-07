@@ -1,4 +1,5 @@
-import 'package:bloc_ecommerce_app/theme/theme.dart';
+import 'package:bloc_ecommerce_app/core/routes/routes_pages.dart';
+import 'package:bloc_ecommerce_app/core/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +22,7 @@ class BlocEcommerceApp extends StatelessWidget {
               theme: const MaterialTheme(TextTheme()).light(),
               darkTheme: const MaterialTheme(TextTheme()).dark(),
               debugShowCheckedModeBanner: false,
-              //routerConfig: RoutePages.ROUTER,
+              routerConfig: RoutePages.router,
             );
           },
         ),
