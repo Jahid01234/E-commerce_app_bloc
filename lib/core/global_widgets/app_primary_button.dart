@@ -1,0 +1,91 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+class AppPrimaryButton extends StatelessWidget {
+  final String text;
+  final VoidCallback onTap;
+  final bool isLoading;
+  final Widget? icon;
+  final double? radius;
+  final Color? bgColor;
+  final Color? border;
+  final Color? textColor;
+  final double? fontSize;
+  final double? height;
+  final double? width;
+  final FontWeight? fontWeight;
+
+  const AppPrimaryButton({
+    super.key,
+    required this.text,
+    required this.onTap,
+    this.isLoading = false,
+    this.icon,
+    this.bgColor,
+    this.border,
+    this.textColor,
+    this.radius,
+    this.fontSize,
+    this.height,
+    this.width,
+    this.fontWeight,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      borderRadius: BorderRadius.circular(radius ?? 12),
+      child: GestureDetector(
+        onTap: isLoading ? null : onTap,
+        child: Container(
+          height: height ?? 60,
+          width: width ?? double.infinity,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(radius ?? 12),
+            color: bgColor ?? Theme.of(context).colorScheme.onPrimaryContainer,
+            border: border != null ? Border.all(color: border!) : null,
+          ),
+          child: isLoading
+              ? SizedBox(
+            height: 24,
+            width: 24,
+            child: CircularProgressIndicator(
+              color: Colors.white,
+              strokeWidth: 2.5,
+            ),
+          )
+              : Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5),
+                child: Text(
+                  text,
+                  style: GoogleFonts.poppins(
+                    fontSize: fontSize ?? 16.sp,
+                    fontWeight: fontWeight ?? FontWeight.w600,
+                    color: textColor ?? Colors.white,
+                  ),
+                ),
+              ),
+              if (icon != null) ...[
+                SizedBox(width: 5.w),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.black,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Center(child: icon),
+                ),
+              ],
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
