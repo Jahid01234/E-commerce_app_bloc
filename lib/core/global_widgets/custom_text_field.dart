@@ -38,18 +38,12 @@ class CustomTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasError = errorText != null && errorText!.isNotEmpty;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
+    return Container(
           height: maxLines != null && maxLines! > 1 ? null : (height ?? 57),
           width: double.infinity,
           decoration: BoxDecoration(
             border: Border.all(
-              color: hasError
-                  ? Colors.red
-                  : (borderColor ?? const Color(0xFFF7F8F8)),
+              color: (borderColor ?? const Color(0xFFF7F8F8)),
               width: 1,
             ),
             borderRadius: BorderRadius.circular(radius ?? 12),
@@ -86,31 +80,13 @@ class CustomTextField extends StatelessWidget {
                 borderRadius: BorderRadius.circular(12),
               ),
               focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: hasError
-                    ? Colors.transparent
-                    : Colors.grey,
-                ),
+                borderSide: BorderSide.none,
                 borderRadius: BorderRadius.circular(12),
               ),
               border: InputBorder.none,
               contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             ),
           ),
-        ),
-        // Error message outside the border
-        if (hasError)
-          Padding(
-            padding: const EdgeInsets.only(left: 16, top: 6),
-            child: Text(
-              errorText!,
-              style: GoogleFonts.poppins(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: Colors.red,
-              ),
-            ),
-          ),
-      ],
-    );
+        );
   }
 }

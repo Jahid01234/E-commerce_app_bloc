@@ -1,31 +1,22 @@
+import 'package:bloc_ecommerce_app/core/repository/auth_repository.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'login_event.dart';
 import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc() : super(const LoginState()) {
+  final AuthRepository repository;
 
-    on<EmailChanged>((event, emit) {
-      emit(state.copyWith(email: event.email));
-    });
+  LoginBloc(this.repository) : super(LoginInitial()){
+    on<RequestEmailLogin>((event, emit) async {
+      debugPrint("Email: ${event.email}, Password: ${event.password},");
+      try {
+        await repository.signInWithEmail(event.email, event.password).then((value) => emit(LoginSuccess()));
 
-    on<PasswordChanged>((event, emit) {
-      emit(state.copyWith(password: event.password));
-    });
-
-    on<LoginSubmitted>((event, emit) async {
-      emit(state.copyWith(isLoading: true));
-
-      await Future.delayed(const Duration(seconds: 2));
-
-      if (state.email == "admin@gmail.com" && state.password == "123456") {
-        emit(state.copyWith(isLoading: false));
-      } else {
-        emit(state.copyWith(
-          isLoading: false,
-          errorMessage: "Invalid Email or Password",
-        ));
+      } catch (e) {
+        emit(LoginFailed(e.toString()));
       }
     });
   }
+
 }

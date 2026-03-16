@@ -1,37 +1,26 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/cupertino.dart';
 
-class LoginState extends Equatable {
-  final String email;
-  final String password;
-  final bool isPasswordHidden;
-  final bool isLoading;
-  final String? errorMessage;
+abstract class LoginState extends Equatable{
+  @override
+  List<Object?> get props => [];
+}
 
-  const LoginState({
-    this.email = '',
-    this.password = '',
-    this.isPasswordHidden = true,
-    this.isLoading = false,
-    this.errorMessage,
-  });
-
-  LoginState copyWith({
-    String? email,
-    String? password,
-    bool? isPasswordHidden,
-    bool? isLoading,
-    String? errorMessage,
-  }) {
-    return LoginState(
-      email: email ?? this.email,
-      password: password ?? this.password,
-      isPasswordHidden: isPasswordHidden ?? this.isPasswordHidden,
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
-    );
-  }
+class LoginInitial extends LoginState{
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
-  List<Object?> get props =>
-      [email, password, isPasswordHidden, isLoading, errorMessage];
+  List<Object?> get props => [emailController, passwordController];
+}
+
+class LoginLoading extends LoginState{}
+class LoginSuccess extends LoginState{}
+
+class LoginFailed extends LoginState{
+  final String message;
+  LoginFailed(this.message);
+
+  @override
+  List<Object?> get props => [message];
 }
