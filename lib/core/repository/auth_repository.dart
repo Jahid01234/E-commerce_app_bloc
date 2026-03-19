@@ -6,6 +6,24 @@ import 'package:flutter/material.dart';
 class AuthRepository{
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  // sign up ..............
+  Future<User?> signUpWithEmail(
+      String email, String password, String username) async {
+    try {
+      final credential = await _auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      final user = credential.user;
+      if (user != null) {
+        // await createUserInDatabase(user, username);
+      }
+      return user;
+    } catch (e) {
+      debugPrint("Error: $e");
+      throw Exception(e);
+    }
+  }
+
+  // sign in ..............
   Future<User?> signInWithEmail(String email, String password) async {
     try {
       final userCredential = await _auth.signInWithEmailAndPassword(
@@ -25,4 +43,5 @@ class AuthRepository{
       throw Exception(e);
     }
   }
+
 }

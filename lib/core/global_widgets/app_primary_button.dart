@@ -45,7 +45,7 @@ class AppPrimaryButton extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(radius ?? 12),
-            color: bgColor ?? Theme.of(context).colorScheme.onPrimaryContainer,
+            color: bgColor ?? Theme.of(context).colorScheme.primary,
             border: border != null ? Border.all(color: border!) : null,
           ),
           child: isLoading

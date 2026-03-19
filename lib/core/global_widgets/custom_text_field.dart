@@ -42,10 +42,6 @@ class CustomTextField extends StatelessWidget {
           height: maxLines != null && maxLines! > 1 ? null : (height ?? 57),
           width: double.infinity,
           decoration: BoxDecoration(
-            border: Border.all(
-              color: (borderColor ?? const Color(0xFFF7F8F8)),
-              width: 1,
-            ),
             borderRadius: BorderRadius.circular(radius ?? 12),
           ),
           child: TextField(
@@ -62,14 +58,18 @@ class CustomTextField extends StatelessWidget {
             style: GoogleFonts.poppins(
               fontSize: 16,
               fontWeight: FontWeight.w400,
-              color: Colors.black,
+              color: Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
             ),
             decoration: InputDecoration(
               hintText: hinText,
               suffixIcon: suffixIcon,
               prefixIcon: prefixIcon,
               filled: true,
-              fillColor: const Color(0xFFF7F8F8),
+              fillColor: Theme.of(context).brightness == Brightness.dark
+                  ? Colors.black.withValues(alpha: 0.3)
+                  : Colors.white.withValues(alpha: 0.3),
               hintStyle: GoogleFonts.poppins(
                 fontSize: 14,
                 fontWeight: FontWeight.w400,

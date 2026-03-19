@@ -1,5 +1,6 @@
 import 'package:bloc_ecommerce_app/core/global_widgets/app_primary_button.dart';
 import 'package:bloc_ecommerce_app/core/global_widgets/custom_text_field.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -8,13 +9,14 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 80.h),
+            SizedBox(height: 100.h),
             Center(
               child: Column(
                 children: [
@@ -22,7 +24,7 @@ class LoginScreen extends StatelessWidget {
                     "Welcome",
                     style: TextStyle(
                       fontSize: 22.sp,
-                      color: Colors.black,
+                      color: theme.colorScheme.inverseSurface,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -30,14 +32,14 @@ class LoginScreen extends StatelessWidget {
                     "Please enter your data to continue",
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: Colors.grey,
+                      color: theme.hintColor,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 30.h),
+            SizedBox(height: 60.h),
             CustomTextField(
               controller: TextEditingController(),
               hinText: "Enter Email",
@@ -56,14 +58,42 @@ class LoginScreen extends StatelessWidget {
                 "Forget your password?",
                 style: TextStyle(
                   decoration: TextDecoration.underline,
-                  color: Colors.teal,
+                  color: theme.colorScheme.onSecondaryContainer,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
             ),
-            SizedBox(height: 60.h),
-            AppPrimaryButton(text: "Login", onTap: () {}),
+            SizedBox(height: 80.h),
+            AppPrimaryButton(
+                text: "Login",
+                onTap: () {}),
+            SizedBox(height: 20.h),
+            Center(
+              child: RichText(
+                text: TextSpan(
+                  text: "Create a new account? ",
+                  style: TextStyle(
+                    color: theme.hintColor,
+                    fontSize: 16,
+                  ),
+                  children: [
+                    TextSpan(
+                      text: "Sign Up",
+                      style: TextStyle(
+                        color: theme.colorScheme.primary,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      recognizer: TapGestureRecognizer()
+                        ..onTap = () {
+                          // Navigate to SignUp screen
+                        },
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ],
         ),
       ),
