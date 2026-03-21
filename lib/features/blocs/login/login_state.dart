@@ -14,10 +14,10 @@ class LoginInitial extends LoginState {
   List<Object?> get props => [emailController, passwordController];
 }
 
-class LoginLoading extends LoginState{}
-class LoginSuccess extends LoginState{}
+class LoginLoading extends LoginState {}
+class LoginSuccess extends LoginState {}
 
-class LoginFailed extends LoginState{
+class LoginFailed extends LoginState {
   final String message;
   LoginFailed(this.message);
 

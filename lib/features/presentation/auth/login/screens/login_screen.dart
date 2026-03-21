@@ -67,7 +67,8 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: 80.h),
             AppPrimaryButton(
                 text: "Login",
-                onTap: () {}),
+                onTap: () {},
+            ),
             SizedBox(height: 20.h),
             Center(
               child: RichText(
