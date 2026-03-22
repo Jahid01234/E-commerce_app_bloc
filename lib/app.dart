@@ -1,6 +1,7 @@
 import 'package:bloc_ecommerce_app/core/repository/auth_repository.dart';
 import 'package:bloc_ecommerce_app/core/routes/routes_pages.dart';
 import 'package:bloc_ecommerce_app/core/theme/theme.dart';
+import 'package:bloc_ecommerce_app/features/blocs/login/login_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/splash/splash_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,7 @@ class BlocEcommerceApp extends StatelessWidget {
       child: MultiBlocProvider(
           providers: [
             BlocProvider(create: (context)=> SplashCubit()..redirectToNextScreen()),
+            BlocProvider(create: (context)=> LoginBloc(context.read<AuthRepository>())),
           ],
           child: ScreenUtilInit(
             designSize: const Size(360, 690),

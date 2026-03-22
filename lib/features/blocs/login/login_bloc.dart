@@ -12,7 +12,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       debugPrint("Email: ${event.email}, Password: ${event.password},");
       try {
         await repository.signInWithEmail(event.email, event.password).then((value) => emit(LoginSuccess()));
-
       } catch (e) {
         emit(LoginFailed(e.toString()));
       }

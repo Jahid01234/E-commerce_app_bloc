@@ -1,7 +1,11 @@
 import 'package:bloc_ecommerce_app/core/global_widgets/app_primary_button.dart';
 import 'package:bloc_ecommerce_app/core/global_widgets/custom_text_field.dart';
+import 'package:bloc_ecommerce_app/features/blocs/login/login_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/login/login_event.dart';
+import 'package:bloc_ecommerce_app/features/blocs/login/login_state.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -40,16 +44,40 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 60.h),
-            CustomTextField(
-              controller: TextEditingController(),
-              hinText: "Enter Email",
-              prefixIcon: const Icon(Icons.mail_outline),
-            ),
-            SizedBox(height: 16.h),
-            CustomTextField(
-              controller: TextEditingController(),
-              hinText: "Enter Password",
-              prefixIcon: const Icon(Icons.lock_outline),
+            BlocConsumer<LoginBloc, LoginState>(
+              listener: (BuildContext context, state) {
+                if (state is LoginSuccess) {
+                  //............................
+                }
+
+                if (state is LoginFailed) {
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.message)));
+                }
+              },
+
+              builder: (BuildContext context, state) {
+                if (state is LoginInitial) {
+                  return Column(
+                    children: [
+                      CustomTextField(
+                        controller: state.emailController,
+                        hinText: "Enter Email",
+                        prefixIcon: const Icon(Icons.mail_outline),
+                      ),
+                      SizedBox(height: 16.h),
+                      CustomTextField(
+                        controller: state.passwordController,
+                        hinText: "Enter Password",
+                        prefixIcon: const Icon(Icons.lock_outline),
+                      ),
+                    ],
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
             ),
             SizedBox(height: 20.h),
             Align(
@@ -65,19 +93,28 @@ class LoginScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 80.h),
-            AppPrimaryButton(
-                text: "Login",
-                onTap: () {},
+            BlocBuilder<LoginBloc, LoginState>(
+              builder: (context, state) {
+                return AppPrimaryButton(
+                    text: "Login",
+                    onTap: () {
+                      if(state is LoginInitial) {
+                        context.read<LoginBloc>().add(RequestEmailLogin(
+                            email: state.emailController.text.trim(),
+                            password: state.passwordController.text.trim(),
+                          )
+                        );
+                       }
+                      },
+                );
+              },
             ),
             SizedBox(height: 20.h),
             Center(
               child: RichText(
                 text: TextSpan(
                   text: "Create a new account? ",
-                  style: TextStyle(
-                    color: theme.hintColor,
-                    fontSize: 16,
-                  ),
+                  style: TextStyle(color: theme.hintColor, fontSize: 16),
                   children: [
                     TextSpan(
                       text: "Sign Up",
