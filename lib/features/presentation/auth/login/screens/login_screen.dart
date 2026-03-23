@@ -56,7 +56,6 @@ class LoginScreen extends StatelessWidget {
                   ).showSnackBar(SnackBar(content: Text(state.message)));
                 }
               },
-
               builder: (BuildContext context, state) {
                 if (state is LoginInitial) {
                   return Column(
