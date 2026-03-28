@@ -8,6 +8,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthRepository repository;
 
   LoginBloc(this.repository) : super(LoginInitial()){
+
     on<RequestEmailLogin>((event, emit) async {
       debugPrint("Email: ${event.email}, Password: ${event.password},");
       try {
@@ -16,6 +17,20 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         emit(LoginFailed(e.toString()));
       }
     });
+
+    on<TogglePasswordVisibility>((event, emit) {
+      if (state is LoginInitial) {
+        final currentState = state as LoginInitial;
+        final newState = LoginInitial(
+          isPasswordVisible: !currentState.isPasswordVisible,
+        );
+        newState.emailController.text = currentState.emailController.text;
+        newState.passwordController.text = currentState.passwordController.text;
+        emit(newState);
+      }
+    });
+
+
   }
 
 }

@@ -9,9 +9,12 @@ abstract class LoginState extends Equatable {
 class LoginInitial extends LoginState {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final bool isPasswordVisible;
+
+  LoginInitial({this.isPasswordVisible = false});
 
   @override
-  List<Object?> get props => [emailController, passwordController];
+  List<Object?> get props => [emailController, passwordController,isPasswordVisible];
 }
 
 class LoginLoading extends LoginState {}

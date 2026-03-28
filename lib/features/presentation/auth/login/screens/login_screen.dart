@@ -70,6 +70,17 @@ class LoginScreen extends StatelessWidget {
                         controller: state.passwordController,
                         hinText: "Enter Password",
                         prefixIcon: const Icon(Icons.lock_outline),
+                        obsecureText: !state.isPasswordVisible,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            state.isPasswordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                          ),
+                          onPressed: () {
+                            context.read<LoginBloc>().add(TogglePasswordVisibility());
+                          },
+                        ),
                       ),
                     ],
                   );
