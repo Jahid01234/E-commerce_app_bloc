@@ -1,5 +1,6 @@
 import 'package:bloc_ecommerce_app/core/routes/routes.dart';
 import 'package:bloc_ecommerce_app/features/presentation/auth/login/screens/login_screen.dart';
+import 'package:bloc_ecommerce_app/features/presentation/auth/register/screens/register_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/splash/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -18,6 +19,12 @@ class RoutePages {
           name: Routes.login,
           pageBuilder: (context, state) =>
            MaterialPage(child: LoginScreen()),
+      ),
+      GoRoute(
+          path: Routes.register,
+          name: Routes.register,
+          pageBuilder: (context, state) =>
+           MaterialPage(child: RegisterScreen()),
       ),
     ],
   );

@@ -10,8 +10,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Welcome",
+                    "Create Account",
                     style: TextStyle(
                       fontSize: 22.sp,
                       color: theme.colorScheme.inverseSurface,
@@ -64,6 +64,12 @@ class LoginScreen extends StatelessWidget {
                     children: [
                       CustomTextField(
                         controller: state.emailController,
+                        hinText: "Enter Username",
+                        prefixIcon: const Icon(Icons.person_outline),
+                      ),
+                      SizedBox(height: 16.h),
+                      CustomTextField(
+                        controller: state.emailController,
                         hinText: "Enter Email",
                         prefixIcon: const Icon(Icons.mail_outline),
                       ),
@@ -91,33 +97,21 @@ class LoginScreen extends StatelessWidget {
                 }
               },
             ),
-            SizedBox(height: 20.h),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                "Forget your password?",
-                style: TextStyle(
-                  decoration: TextDecoration.underline,
-                  color: theme.colorScheme.onSecondaryContainer,
-                  fontSize: 14.sp,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ),
+
             SizedBox(height: 80.h),
             BlocBuilder<LoginBloc, LoginState>(
               builder: (context, state) {
                 return AppPrimaryButton(
-                    text: "Login",
-                    onTap: () {
-                      if(state is LoginInitial) {
-                        context.read<LoginBloc>().add(RequestEmailLogin(
-                            email: state.emailController.text.trim(),
-                            password: state.passwordController.text.trim(),
-                          )
-                        );
-                       }
-                      },
+                  text: "Sign Up",
+                  onTap: () {
+                    if(state is LoginInitial) {
+                      context.read<LoginBloc>().add(RequestEmailLogin(
+                        email: state.emailController.text.trim(),
+                        password: state.passwordController.text.trim(),
+                      )
+                      );
+                    }
+                  },
                 );
               },
             ),
@@ -125,11 +119,11 @@ class LoginScreen extends StatelessWidget {
             Center(
               child: RichText(
                 text: TextSpan(
-                  text: "Create a new account? ",
+                  text: "Already have an account? ",
                   style: TextStyle(color: theme.hintColor, fontSize: 16),
                   children: [
                     TextSpan(
-                      text: "Sign Up",
+                      text: "Login",
                       style: TextStyle(
                         color: theme.colorScheme.primary,
                         fontSize: 16,
@@ -137,7 +131,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                       recognizer: TapGestureRecognizer()
                         ..onTap = () {
-                          context.goNamed(Routes.register);
+                          context.goNamed(Routes.login);
                         },
                     ),
                   ],
