@@ -1,9 +1,9 @@
 import 'package:bloc_ecommerce_app/core/global_widgets/app_primary_button.dart';
 import 'package:bloc_ecommerce_app/core/global_widgets/custom_text_field.dart';
 import 'package:bloc_ecommerce_app/core/routes/routes.dart';
-import 'package:bloc_ecommerce_app/features/blocs/login/login_bloc.dart';
-import 'package:bloc_ecommerce_app/features/blocs/login/login_event.dart';
-import 'package:bloc_ecommerce_app/features/blocs/login/login_state.dart';
+import 'package:bloc_ecommerce_app/features/blocs/register/register_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/register/register_event.dart';
+import 'package:bloc_ecommerce_app/features/blocs/register/register_state.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -46,24 +46,27 @@ class RegisterScreen extends StatelessWidget {
               ),
             ),
             SizedBox(height: 60.h),
-            BlocConsumer<LoginBloc, LoginState>(
+            BlocConsumer<RegisterBloc, RegisterState>(
               listener: (BuildContext context, state) {
-                if (state is LoginSuccess) {
+                if (state is RegisterSuccess) {
                   //............................
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text("Create account successful.")));
                 }
 
-                if (state is LoginFailed) {
+                if (state is RegisterFailed) {
                   ScaffoldMessenger.of(
                     context,
                   ).showSnackBar(SnackBar(content: Text(state.message)));
                 }
               },
               builder: (BuildContext context, state) {
-                if (state is LoginInitial) {
+                if (state is RegisterInitial) {
                   return Column(
                     children: [
                       CustomTextField(
-                        controller: state.emailController,
+                        controller: state.userNameController,
                         hinText: "Enter Username",
                         prefixIcon: const Icon(Icons.person_outline),
                       ),
@@ -86,7 +89,7 @@ class RegisterScreen extends StatelessWidget {
                                 : Icons.visibility_off,
                           ),
                           onPressed: () {
-                            context.read<LoginBloc>().add(TogglePasswordVisibility());
+                            context.read<RegisterBloc>().add(TogglePasswordVisibilityRegister());
                           },
                         ),
                       ),
@@ -99,16 +102,18 @@ class RegisterScreen extends StatelessWidget {
             ),
 
             SizedBox(height: 80.h),
-            BlocBuilder<LoginBloc, LoginState>(
+            BlocBuilder<RegisterBloc, RegisterState>(
               builder: (context, state) {
                 return AppPrimaryButton(
                   text: "Sign Up",
                   onTap: () {
-                    if(state is LoginInitial) {
-                      context.read<LoginBloc>().add(RequestEmailLogin(
-                        email: state.emailController.text.trim(),
-                        password: state.passwordController.text.trim(),
-                      )
+                    if(state is RegisterInitial) {
+                      context.read<RegisterBloc>().add(
+                          RequestEmailRegister(
+                            userName: state.userNameController.text.trim(),
+                            email: state.emailController.text.trim(),
+                            password: state.passwordController.text.trim(),
+                        )
                       );
                     }
                   },

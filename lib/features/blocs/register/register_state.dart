@@ -7,6 +7,7 @@ abstract class RegisterState extends Equatable {
 }
 
 class RegisterInitial extends RegisterState {
+  final TextEditingController userNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final bool isPasswordVisible;
@@ -14,7 +15,7 @@ class RegisterInitial extends RegisterState {
   RegisterInitial({this.isPasswordVisible = false});
 
   @override
-  List<Object?> get props => [emailController, passwordController,isPasswordVisible];
+  List<Object?> get props => [userNameController, emailController, passwordController,isPasswordVisible];
 }
 
 class RegisterLoading extends RegisterState {}
