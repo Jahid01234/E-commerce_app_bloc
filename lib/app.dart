@@ -1,6 +1,7 @@
 import 'package:bloc_ecommerce_app/core/repository/auth_repository.dart';
 import 'package:bloc_ecommerce_app/core/routes/routes_pages.dart';
 import 'package:bloc_ecommerce_app/core/theme/theme.dart';
+import 'package:bloc_ecommerce_app/features/blocs/bottom_nav/bottom_nav_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/login/login_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/register/register_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/splash/splash_cubit.dart';
@@ -22,6 +23,7 @@ class BlocEcommerceApp extends StatelessWidget {
             BlocProvider(create: (context)=> SplashCubit()..redirectToNextScreen()),
             BlocProvider(create: (context)=> LoginBloc(context.read<AuthRepository>())),
             BlocProvider(create: (context)=> RegisterBloc(context.read<AuthRepository>())),
+            BlocProvider(create: (context)=> BottomNavBloc()),
           ],
           child: ScreenUtilInit(
             designSize: const Size(360, 690),

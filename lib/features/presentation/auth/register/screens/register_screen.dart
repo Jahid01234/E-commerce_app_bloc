@@ -50,6 +50,7 @@ class RegisterScreen extends StatelessWidget {
               listener: (BuildContext context, state) {
                 if (state is RegisterSuccess) {
                   //............................
+                  context.goNamed(Routes.bottomNavBar);
                   ScaffoldMessenger.of(
                     context,
                   ).showSnackBar(SnackBar(content: Text("Create account successful.")));

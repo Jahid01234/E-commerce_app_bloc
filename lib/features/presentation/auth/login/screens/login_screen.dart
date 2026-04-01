@@ -50,6 +50,7 @@ class LoginScreen extends StatelessWidget {
               listener: (BuildContext context, state) {
                 if (state is LoginSuccess) {
                   //............................
+                  context.goNamed(Routes.bottomNavBar);
                 }
 
                 if (state is LoginFailed) {
