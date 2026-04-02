@@ -59,24 +59,59 @@ class LoginScreen extends StatelessWidget {
                   ).showSnackBar(SnackBar(content: Text(state.message)));
                 }
               },
-              builder: (BuildContext context, state) {
-                if (state is LoginInitial) {
+              // builder: (BuildContext context, state) {
+              //   if (state is LoginInitial) {
+              //     return Column(
+              //       children: [
+              //         CustomTextField(
+              //           controller: state.emailController,
+              //           hinText: "Enter Email",
+              //           prefixIcon: const Icon(Icons.mail_outline),
+              //         ),
+              //         SizedBox(height: 16.h),
+              //         CustomTextField(
+              //           controller: state.passwordController,
+              //           hinText: "Enter Password",
+              //           prefixIcon: const Icon(Icons.lock_outline),
+              //           obsecureText: !state.isPasswordVisible,
+              //           suffixIcon: IconButton(
+              //             icon: Icon(
+              //               state.isPasswordVisible
+              //                   ? Icons.visibility
+              //                   : Icons.visibility_off,
+              //             ),
+              //             onPressed: () {
+              //               context.read<LoginBloc>().add(TogglePasswordVisibility());
+              //             },
+              //           ),
+              //         ),
+              //       ],
+              //     );
+              //   } else {
+              //     return const SizedBox();
+              //   }
+              // },
+                builder: (BuildContext context, state) {
+                  final currentState = state is LoginInitial
+                      ? state
+                      : LoginInitial(); // fallback state
+
                   return Column(
                     children: [
                       CustomTextField(
-                        controller: state.emailController,
+                        controller: currentState.emailController,
                         hinText: "Enter Email",
                         prefixIcon: const Icon(Icons.mail_outline),
                       ),
                       SizedBox(height: 16.h),
                       CustomTextField(
-                        controller: state.passwordController,
+                        controller: currentState.passwordController,
                         hinText: "Enter Password",
                         prefixIcon: const Icon(Icons.lock_outline),
-                        obsecureText: !state.isPasswordVisible,
+                        obsecureText: !currentState.isPasswordVisible,
                         suffixIcon: IconButton(
                           icon: Icon(
-                            state.isPasswordVisible
+                            currentState.isPasswordVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
                           ),
@@ -87,10 +122,7 @@ class LoginScreen extends StatelessWidget {
                       ),
                     ],
                   );
-                } else {
-                  return const SizedBox();
                 }
-              },
             ),
             SizedBox(height: 20.h),
             Align(
@@ -110,15 +142,26 @@ class LoginScreen extends StatelessWidget {
               builder: (context, state) {
                 return AppPrimaryButton(
                     text: "Login",
+                    // onTap: () {
+                    //   if(state is LoginInitial) {
+                    //     context.read<LoginBloc>().add(RequestEmailLogin(
+                    //         email: state.emailController.text.trim(),
+                    //         password: state.passwordController.text.trim(),
+                    //       )
+                    //     );
+                    //    }
+                    //   },
                     onTap: () {
-                      if(state is LoginInitial) {
+                      final currentState = state is LoginInitial
+                          ? state
+                          : LoginInitial();
+
                         context.read<LoginBloc>().add(RequestEmailLogin(
-                            email: state.emailController.text.trim(),
-                            password: state.passwordController.text.trim(),
-                          )
-                        );
-                       }
-                      },
+                                  email: currentState.emailController.text.trim(),
+                                  password: currentState.passwordController.text.trim(),
+                                )
+                              );
+                      }
                 );
               },
             ),
