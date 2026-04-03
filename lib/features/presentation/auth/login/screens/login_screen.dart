@@ -49,7 +49,6 @@ class LoginScreen extends StatelessWidget {
             BlocConsumer<LoginBloc, LoginState>(
               listener: (BuildContext context, state) {
                 if (state is LoginSuccess) {
-                  //............................
                   context.goNamed(Routes.bottomNavBar);
                 }
 
@@ -59,70 +58,37 @@ class LoginScreen extends StatelessWidget {
                   ).showSnackBar(SnackBar(content: Text(state.message)));
                 }
               },
-              // builder: (BuildContext context, state) {
-              //   if (state is LoginInitial) {
-              //     return Column(
-              //       children: [
-              //         CustomTextField(
-              //           controller: state.emailController,
-              //           hinText: "Enter Email",
-              //           prefixIcon: const Icon(Icons.mail_outline),
-              //         ),
-              //         SizedBox(height: 16.h),
-              //         CustomTextField(
-              //           controller: state.passwordController,
-              //           hinText: "Enter Password",
-              //           prefixIcon: const Icon(Icons.lock_outline),
-              //           obsecureText: !state.isPasswordVisible,
-              //           suffixIcon: IconButton(
-              //             icon: Icon(
-              //               state.isPasswordVisible
-              //                   ? Icons.visibility
-              //                   : Icons.visibility_off,
-              //             ),
-              //             onPressed: () {
-              //               context.read<LoginBloc>().add(TogglePasswordVisibility());
-              //             },
-              //           ),
-              //         ),
-              //       ],
-              //     );
-              //   } else {
-              //     return const SizedBox();
-              //   }
-              // },
-                builder: (BuildContext context, state) {
-                  final currentState = state is LoginInitial
-                      ? state
-                      : LoginInitial(); // fallback state
+              builder: (context, state) {
+                final bloc = context.read<LoginBloc>();
+                final isPasswordVisible = state is LoginInitial
+                       ? state.isPasswordVisible
+                       : false;
 
-                  return Column(
-                    children: [
-                      CustomTextField(
-                        controller: currentState.emailController,
-                        hinText: "Enter Email",
-                        prefixIcon: const Icon(Icons.mail_outline),
-                      ),
-                      SizedBox(height: 16.h),
-                      CustomTextField(
-                        controller: currentState.passwordController,
-                        hinText: "Enter Password",
-                        prefixIcon: const Icon(Icons.lock_outline),
-                        obsecureText: !currentState.isPasswordVisible,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            currentState.isPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: () {
-                            context.read<LoginBloc>().add(TogglePasswordVisibility());
-                          },
+                return Column(
+                  children: [
+                    CustomTextField(
+                      controller: bloc.emailController,
+                      hinText: "Enter Email",
+                      prefixIcon: const Icon(Icons.mail_outline),
+                    ),
+                    SizedBox(height: 16.h),
+                    CustomTextField(
+                      controller: bloc.passwordController,
+                      hinText: "Enter Password",
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      obsecureText: !isPasswordVisible,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          isPasswordVisible ? Icons.visibility : Icons.visibility_off,
                         ),
+                        onPressed: () {
+                          context.read<LoginBloc>().add(TogglePasswordVisibility());
+                        },
                       ),
-                    ],
-                  );
-                }
+                    ),
+                  ],
+                );
+              },
             ),
             SizedBox(height: 20.h),
             Align(
@@ -140,28 +106,19 @@ class LoginScreen extends StatelessWidget {
             SizedBox(height: 80.h),
             BlocBuilder<LoginBloc, LoginState>(
               builder: (context, state) {
-                return AppPrimaryButton(
-                    text: "Login",
-                    // onTap: () {
-                    //   if(state is LoginInitial) {
-                    //     context.read<LoginBloc>().add(RequestEmailLogin(
-                    //         email: state.emailController.text.trim(),
-                    //         password: state.passwordController.text.trim(),
-                    //       )
-                    //     );
-                    //    }
-                    //   },
-                    onTap: () {
-                      final currentState = state is LoginInitial
-                          ? state
-                          : LoginInitial();
+                final isLoading = state is LoginLoading;
 
-                        context.read<LoginBloc>().add(RequestEmailLogin(
-                                  email: currentState.emailController.text.trim(),
-                                  password: currentState.passwordController.text.trim(),
-                                )
-                              );
-                      }
+                return AppPrimaryButton(
+                  text: "Login",
+                  isLoading: isLoading,
+                  onTap: () {
+                    if (isLoading) return;
+                    final bloc = context.read<LoginBloc>();
+                    bloc.add(RequestEmailLogin(
+                      email: bloc.emailController.text.trim(),
+                      password: bloc.passwordController.text.trim(),
+                    ));
+                  },
                 );
               },
             ),

@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
 
 abstract class LoginState extends Equatable {
   @override
@@ -7,22 +6,26 @@ abstract class LoginState extends Equatable {
 }
 
 class LoginInitial extends LoginState {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   final bool isPasswordVisible;
-
   LoginInitial({this.isPasswordVisible = false});
 
+  LoginInitial copyWith({bool? isPasswordVisible}) {
+    return LoginInitial(
+      isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
+    );
+  }
+
   @override
-  List<Object?> get props => [emailController, passwordController,isPasswordVisible];
+  List<Object?> get props => [isPasswordVisible];
 }
 
 class LoginLoading extends LoginState {}
+
 class LoginSuccess extends LoginState {}
 
 class LoginFailed extends LoginState {
   final String message;
-  LoginFailed(this.message);
+   LoginFailed(this.message);
 
   @override
   List<Object?> get props => [message];
