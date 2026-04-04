@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/cupertino.dart';
+
 
 abstract class RegisterState extends Equatable {
   @override
@@ -7,15 +7,19 @@ abstract class RegisterState extends Equatable {
 }
 
 class RegisterInitial extends RegisterState {
-  final TextEditingController userNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
   final bool isPasswordVisible;
 
   RegisterInitial({this.isPasswordVisible = false});
 
+
+  RegisterInitial copyWith({bool? isPasswordVisible}) {
+    return RegisterInitial(
+      isPasswordVisible: isPasswordVisible ?? this.isPasswordVisible,
+    );
+  }
+
   @override
-  List<Object?> get props => [userNameController, emailController, passwordController,isPasswordVisible];
+  List<Object?> get props => [isPasswordVisible];
 }
 
 class RegisterLoading extends RegisterState {}

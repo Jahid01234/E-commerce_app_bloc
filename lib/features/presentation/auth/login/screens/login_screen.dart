@@ -61,8 +61,8 @@ class LoginScreen extends StatelessWidget {
               builder: (context, state) {
                 final bloc = context.read<LoginBloc>();
                 final isPasswordVisible = state is LoginInitial
-                       ? state.isPasswordVisible
-                       : false;
+                    ? state.isPasswordVisible
+                    : false;
 
                 return Column(
                   children: [
@@ -79,10 +79,14 @@ class LoginScreen extends StatelessWidget {
                       obsecureText: !isPasswordVisible,
                       suffixIcon: IconButton(
                         icon: Icon(
-                          isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                          isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
                         onPressed: () {
-                          context.read<LoginBloc>().add(TogglePasswordVisibility());
+                          context.read<LoginBloc>().add(
+                            TogglePasswordVisibility(),
+                          );
                         },
                       ),
                     ),
@@ -114,10 +118,12 @@ class LoginScreen extends StatelessWidget {
                   onTap: () {
                     if (isLoading) return;
                     final bloc = context.read<LoginBloc>();
-                    bloc.add(RequestEmailLogin(
-                      email: bloc.emailController.text.trim(),
-                      password: bloc.passwordController.text.trim(),
-                    ));
+                    bloc.add(
+                      RequestEmailLogin(
+                        email: bloc.emailController.text.trim(),
+                        password: bloc.passwordController.text.trim(),
+                      ),
+                    );
                   },
                 );
               },

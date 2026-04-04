@@ -6,6 +6,9 @@ import 'register_state.dart';
 
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthRepository repository;
+  final TextEditingController userNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   RegisterBloc(this.repository) : super(RegisterInitial()){
 
@@ -19,19 +22,20 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     });
 
     on<TogglePasswordVisibilityRegister>((event, emit) {
-      if (state is RegisterInitial) {
-        final currentState = state as RegisterInitial;
-        final newState = RegisterInitial(
-          isPasswordVisible: !currentState.isPasswordVisible,
-        );
-        newState.userNameController.text = currentState.userNameController.text;
-        newState.emailController.text = currentState.emailController.text;
-        newState.passwordController.text = currentState.passwordController.text;
-        emit(newState);
-      }
+      final isCurrentlyVisible = state is RegisterInitial
+          ? (state as RegisterInitial).isPasswordVisible
+          : false;
+
+      emit(RegisterInitial(isPasswordVisible: !isCurrentlyVisible));
     });
+  }
 
-
+  @override
+  Future<void> close() {
+    userNameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    return super.close();
   }
 
 }

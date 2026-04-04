@@ -51,9 +51,9 @@ class RegisterScreen extends StatelessWidget {
                 if (state is RegisterSuccess) {
                   //............................
                   context.goNamed(Routes.bottomNavBar);
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(SnackBar(content: Text("Create account successful.")));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text("Create account successful.")),
+                  );
                 }
 
                 if (state is RegisterFailed) {
@@ -62,61 +62,67 @@ class RegisterScreen extends StatelessWidget {
                   ).showSnackBar(SnackBar(content: Text(state.message)));
                 }
               },
-              builder: (BuildContext context, state) {
-                if (state is RegisterInitial) {
-                  return Column(
-                    children: [
-                      CustomTextField(
-                        controller: state.userNameController,
-                        hinText: "Enter Username",
-                        prefixIcon: const Icon(Icons.person_outline),
-                      ),
-                      SizedBox(height: 16.h),
-                      CustomTextField(
-                        controller: state.emailController,
-                        hinText: "Enter Email",
-                        prefixIcon: const Icon(Icons.mail_outline),
-                      ),
-                      SizedBox(height: 16.h),
-                      CustomTextField(
-                        controller: state.passwordController,
-                        hinText: "Enter Password",
-                        prefixIcon: const Icon(Icons.lock_outline),
-                        obsecureText: !state.isPasswordVisible,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            state.isPasswordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          onPressed: () {
-                            context.read<RegisterBloc>().add(TogglePasswordVisibilityRegister());
-                          },
+
+              builder: (context, state) {
+                final bloc = context.read<RegisterBloc>();
+                final isPasswordVisible = state is RegisterInitial
+                    ? state.isPasswordVisible
+                    : false;
+
+                return Column(
+                  children: [
+                    CustomTextField(
+                      controller: bloc.userNameController,
+                      hinText: "Enter Username",
+                      prefixIcon: const Icon(Icons.person_outline),
+                    ),
+                    SizedBox(height: 16.h),
+                    CustomTextField(
+                      controller: bloc.emailController,
+                      hinText: "Enter Email",
+                      prefixIcon: const Icon(Icons.mail_outline),
+                    ),
+                    SizedBox(height: 16.h),
+                    CustomTextField(
+                      controller: bloc.passwordController,
+                      hinText: "Enter Password",
+                      prefixIcon: const Icon(Icons.lock_outline),
+                      obsecureText: !isPasswordVisible,
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          isPasswordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
                         ),
+                        onPressed: () {
+                          context.read<RegisterBloc>().add(
+                            TogglePasswordVisibilityRegister(),
+                          );
+                        },
                       ),
-                    ],
-                  );
-                } else {
-                  return const SizedBox();
-                }
+                    ),
+                  ],
+                );
               },
             ),
 
             SizedBox(height: 80.h),
             BlocBuilder<RegisterBloc, RegisterState>(
               builder: (context, state) {
+                final isLoading = state is RegisterLoading;
                 return AppPrimaryButton(
                   text: "Sign Up",
+                  isLoading: isLoading,
                   onTap: () {
-                    if(state is RegisterInitial) {
-                      context.read<RegisterBloc>().add(
-                          RequestEmailRegister(
-                            userName: state.userNameController.text.trim(),
-                            email: state.emailController.text.trim(),
-                            password: state.passwordController.text.trim(),
-                        )
-                      );
-                    }
+                    if (isLoading) return;
+                    final bloc = context.read<RegisterBloc>();
+                    bloc.add(
+                      RequestEmailRegister(
+                        userName: bloc.userNameController.text.trim(),
+                        email: bloc.emailController.text.trim(),
+                        password: bloc.passwordController.text.trim(),
+                      ),
+                    );
                   },
                 );
               },
