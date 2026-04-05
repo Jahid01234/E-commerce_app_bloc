@@ -1,6 +1,7 @@
 import 'package:bloc_ecommerce_app/features/blocs/bottom_nav/bottom_nav_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/bottom_nav/bottom_nav_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/bottom_nav/bottom_nav_state.dart';
+import 'package:bloc_ecommerce_app/features/presentation/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,7 +9,7 @@ class BottomNavBarScreen extends StatelessWidget {
    const BottomNavBarScreen({super.key});
 
   final List<Widget> screens = const [
-    Center(child: Text("Home")),
+    HomeScreen(),
     Center(child: Text("Cart")),
     Center(child: Text("Profile")),
   ];
