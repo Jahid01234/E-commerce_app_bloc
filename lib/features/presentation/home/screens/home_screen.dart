@@ -1,4 +1,6 @@
+import 'package:bloc_ecommerce_app/features/presentation/home/widgets/custom_search_bar.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/top_header_section.dart';
+import 'package:bloc_ecommerce_app/features/presentation/home/widgets/view_all_header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,7 +21,9 @@ class HomeScreen extends StatelessWidget {
             Text(
               "Hello",
               style: TextStyle(
-                 color: Colors.black,
+                 color: Theme.of(context).brightness == Brightness.dark
+                     ? Colors.white
+                     : Colors.black,
                 fontSize: 27,
                 fontWeight: FontWeight.w600
              ),
@@ -28,10 +32,14 @@ class HomeScreen extends StatelessWidget {
               "Welcome to Laza",
               style: TextStyle(
                  color: Colors.grey,
-                fontSize: 24,
+                fontSize: 20,
                 fontWeight: FontWeight.w400
              ),
             ),
+            SizedBox(height: 20.h),
+            const CustomSearchBar(),
+            SizedBox(height: 20.h),
+            ViewAllHeader(title: "Choose Brand",onTap: (){}),
             SizedBox(height: 20.h),
           ],
         ),

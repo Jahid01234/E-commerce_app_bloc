@@ -12,13 +12,13 @@ class TopHeaderSection extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _containerWidget(IconsPath.menu),
-          _containerWidget(IconsPath.cartBag)
+          _containerWidget(context,IconsPath.menu),
+          _containerWidget(context,IconsPath.cartBag)
         ],
       ),
     );
   }
-  Widget _containerWidget(String iconsPath){
+  Widget _containerWidget(BuildContext context, String iconsPath){
     return Container(
       height: 50,
       width: 50,
@@ -28,7 +28,15 @@ class TopHeaderSection extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(13),
-        child: SvgPicture.asset(iconsPath),
+        child: SvgPicture.asset(
+          iconsPath,
+          colorFilter: ColorFilter.mode(
+              Theme.of(context).brightness == Brightness.dark
+                ? Colors.white
+                : Colors.black,
+              BlendMode.srcIn,
+          ),
+        ),
       ),
     );
   }
