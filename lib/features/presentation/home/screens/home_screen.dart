@@ -41,6 +41,7 @@ class HomeScreen extends StatelessWidget {
             SizedBox(height: 20.h),
             ViewAllHeader(title: "Choose Brand",onTap: (){}),
             SizedBox(height: 20.h),
+            SizedBox(),
           ],
         ),
       ),
