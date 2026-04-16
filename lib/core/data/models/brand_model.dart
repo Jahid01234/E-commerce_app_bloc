@@ -8,12 +8,12 @@ class BrandModel {
   });
 
   factory BrandModel.fromJson(Map<String, dynamic> json) => BrandModel(
-    brandName: json["brand_name"],
-    brandLogo: json["brand_logo"],
+    brandName: json["brandName"] ?? '',
+    brandLogo: json["brandLogo"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {
-    "brand_name": brandName,
-    "brand_logo": brandLogo,
+    "brandName": brandName,
+    "brandLogo": brandLogo,
   };
 }
