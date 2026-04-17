@@ -1,3 +1,4 @@
+import 'package:bloc_ecommerce_app/core/services/shared_preferences/local_preferences.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_state.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/brand_card.dart';
@@ -23,12 +24,12 @@ class HomeScreen extends StatelessWidget {
             TopHeaderSection(),
             SizedBox(height: 20.h),
             Text(
-              "Hello",
+              "Hello, ${LocalPreferences.getString('username')}",
               style: TextStyle(
                 color: Theme.of(context).brightness == Brightness.dark
                     ? Colors.white
                     : Colors.black,
-                fontSize: 27,
+                fontSize: 23,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -46,13 +47,24 @@ class HomeScreen extends StatelessWidget {
             ViewAllHeader(title: "Choose Brand", onTap: () {}),
             SizedBox(height: 20.h),
             SizedBox(
-              height: 100,
+              height: 60,
               child: BlocBuilder<BrandBloc, BrandState>(
                 builder: (context, state) {
+                  if (state is BrandLoading) {
+                    return ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 5,
+                      separatorBuilder: (_, __) => const SizedBox(width: 20),
+                      itemBuilder: (_, __) => const BrandShimmerCard(),
+                    );
+                  }
                   if (state is BrandFetchSuccess) {
-                    return ListView.builder(
+                    return ListView.separated(
                       scrollDirection: Axis.horizontal,
                       itemCount: state.brands.length,
+                      separatorBuilder: (_,__){
+                        return SizedBox(width: 20);
+                      },
                       itemBuilder: (context, index) {
                         final brands = state.brands[index];
                         return BrandCard(
@@ -61,17 +73,12 @@ class HomeScreen extends StatelessWidget {
                         );
                       },
                     );
-                  } else {
-                    // return ListView.builder(
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemCount: 2,
-                    //   itemBuilder: (context, index) {
-                    //     return ShimmerEffect.rectangular(
-                    //         width: 70, height: layout.width * 0.13),
-                    //   },
-                    // );
-                    return SizedBox();
                   }
+                  if (state is BrandFetchFailed) {
+                    return Center(child: Text(state.message));
+                  }
+
+                  return const SizedBox();
                 },
               ),
             ),

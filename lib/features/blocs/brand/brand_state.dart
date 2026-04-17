@@ -8,6 +8,7 @@ class BrandState extends Equatable{
   List<Object?> get props => [];
 }
 
+class BrandLoading extends BrandState {}
 class BrandInitial extends BrandState{}
 
 class BrandFetchSuccess extends BrandState{
