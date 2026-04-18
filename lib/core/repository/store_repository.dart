@@ -1,10 +1,10 @@
 import 'package:bloc_ecommerce_app/core/data/models/brand_model.dart';
+import 'package:bloc_ecommerce_app/core/data/models/product_model.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class StoreRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
 
   Future<List<BrandModel>> fetchBrands() async {
     final List<BrandModel> brandList = [];
