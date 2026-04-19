@@ -1,6 +1,8 @@
 import 'package:bloc_ecommerce_app/core/services/shared_preferences/local_preferences.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_state.dart';
+import 'package:bloc_ecommerce_app/features/blocs/product/product_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/product/product_state.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/brand_card.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/custom_search_bar.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/product_card.dart';
@@ -89,22 +91,34 @@ class HomeScreen extends StatelessWidget {
               SizedBox(height: 10.h),
               Padding(
                 padding: const EdgeInsets.only(right: 20),
-                child: GridView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 10,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 10,
-                    childAspectRatio: 0.7,
-                  ),
-                  itemBuilder: (context, index) {
-                    return ProductCard(
-                      productName: "",
-                    );
-                  },
+                child: BlocBuilder<ProductBloc,ProductState>(
+                  builder: (context, state) {
+                    if(state is ProductFetchSuccess) {
+                      return GridView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: 10,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 10,
+                          mainAxisSpacing: 10,
+                          childAspectRatio: 0.7,
+                        ),
+                        itemBuilder: (context, index) {
+                          return ProductCard(
+                            productName: "",
+                          );
+                        },
+                      );
+                    }
+
+                    if(state is ProductFetchFailed){
+                      return Center(child: Text(state.message));
+                    }
+
+                    return const SizedBox();
+                  }
                 ),
               ),
               SizedBox(height: 30.h),

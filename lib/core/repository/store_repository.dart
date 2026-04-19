@@ -21,6 +21,21 @@ class StoreRepository {
     return brandList;
   }
 
+  Future<List<ProductModel>> fetchProducts() async {
+    final List<ProductModel> productList = [];
+    final brandsSnapshot = await _firestore.collection("products").get();
+
+    try {
+      for (var product in brandsSnapshot.docs) {
+        productList.add(ProductModel.fromJson(product.data()));
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+
+    return productList;
+  }
+
 
 
   // Future<CategoryModel?> fetchSingleCategory(String categoryId)async{
