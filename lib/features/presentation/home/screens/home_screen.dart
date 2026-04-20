@@ -6,6 +6,7 @@ import 'package:bloc_ecommerce_app/features/blocs/product/product_state.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/brand_card.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/custom_search_bar.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/product_card.dart';
+import 'package:bloc_ecommerce_app/features/presentation/home/widgets/product_shimmer_card.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/top_header_section.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/view_all_header.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(right: 20),
                 child: BlocBuilder<ProductBloc,ProductState>(
                   builder: (context, state) {
-                    if(state is ProductFetchSuccess) {
+                    if (state is ProductLoading) {
                       return GridView.builder(
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
@@ -103,11 +104,32 @@ class HomeScreen extends StatelessWidget {
                           crossAxisCount: 2,
                           crossAxisSpacing: 10,
                           mainAxisSpacing: 10,
-                          childAspectRatio: 0.7,
+                          childAspectRatio: 0.8,
+                        ),
+                        itemBuilder: (_, __) => const ProductShimmerCard(),
+                      );
+                    }
+
+                    if(state is ProductFetchSuccess) {
+                      return GridView.builder(
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: state.products.length,
+                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 15,
+                          mainAxisSpacing: 15,
+                          childAspectRatio: 0.72,
                         ),
                         itemBuilder: (context, index) {
+                          final productItem = state.products[index];
                           return ProductCard(
-                            productName: "",
+                            productName: productItem.productName ?? "unknown",
+                            productThumbnail: productItem.imageGallery.isNotEmpty
+                                ? productItem.imageGallery.first.url
+                                : "",
+                            productPrice: productItem.productPrice,
                           );
                         },
                       );

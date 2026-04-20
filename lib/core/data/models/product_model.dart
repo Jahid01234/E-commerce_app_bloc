@@ -142,10 +142,12 @@ final List<ProductModel> dummyProducts = [
     imageGallery: [
       ImageGallery(
           title: "Image-1",
-          url: "https://images.othoba.com/images/thumbs/0574991_winter-long-full-sleeves-t-shirt.jpeg"),
+          url: "https://images.othoba.com/images/thumbs/0574991_winter-long-full-sleeves-t-shirt.jpeg",
+      ),
       ImageGallery(
           title: "Image-2",
-          url: "https://images.othoba.com/images/thumbs/0574988_winter-long-full-sleeves-t-shirt.jpeg"),
+          url: "https://images.othoba.com/images/thumbs/0574988_winter-long-full-sleeves-t-shirt.jpeg",
+      ),
     ],
     variant: [
       Variant(category: "Size", items: [

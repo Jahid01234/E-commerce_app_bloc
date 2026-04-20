@@ -23,7 +23,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return InkWell(
+    return GestureDetector(
       onTap: onItemTap,
       onDoubleTap: onItemDoubleTap,
       child: Container(
@@ -37,25 +37,45 @@ class ProductCard extends StatelessWidget {
           children: [
             AspectRatio(
               aspectRatio: 1,
-              child: CachedNetworkImage(
-                imageUrl: productThumbnail ?? "",
-                fit: BoxFit.cover,
-                placeholder: (context, url) => Shimmer.fromColors(
-                  baseColor: Colors.grey.shade300,
-                  highlightColor: Colors.grey.shade100,
-                  child: Container(
-                    width: double.infinity,
-                    height: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.white,
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: const BorderRadius.vertical(
+                      top: Radius.circular(10),
+                    ),
+                    child: CachedNetworkImage(
+                      imageUrl: productThumbnail ?? "",
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                      placeholder: (context, url) => Shimmer.fromColors(
+                        baseColor: Colors.grey.shade300,
+                        highlightColor: Colors.grey.shade100,
+                        child: Container(color: Colors.white),
+                      ),
+                      errorWidget: (context, url, error) => Container(
+                        color: Colors.grey.shade100,
+                        child: const Icon(Icons.image_not_supported, size: 40),
+                      ),
                     ),
                   ),
-                ),
-                errorWidget: (context, url, error) => Container(
-                  color: Colors.grey.shade100,
-                  child: const Icon(Icons.image_not_supported,size: 40,),
-                ),
+                  Positioned(
+                    top: 5,
+                    right: 5,
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withValues(alpha: 0.9),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.favorite_border,
+                        size: 18,
+                        color: Colors.red,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             Padding(
@@ -77,9 +97,10 @@ class ProductCard extends StatelessWidget {
                   Text(
                     productPrice == 0.0
                         ? 'Free'
-                        : productPrice?.toStringAsFixed(2) ?? '',
+                        : '\$${productPrice?.toStringAsFixed(0) ?? ''}',
                     style: theme.textTheme.titleMedium
-                        ?.copyWith(fontWeight: FontWeight.bold),
+                        ?.copyWith(fontWeight: FontWeight.w600,
+                    ),
                   )
                 ],
               ),
@@ -90,3 +111,4 @@ class ProductCard extends StatelessWidget {
     );
   }
 }
+
