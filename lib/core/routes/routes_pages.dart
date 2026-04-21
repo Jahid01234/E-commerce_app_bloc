@@ -3,6 +3,7 @@ import 'package:bloc_ecommerce_app/features/presentation/auth/login/screens/logi
 import 'package:bloc_ecommerce_app/features/presentation/auth/register/screens/register_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/bottom_nav/screens/bottom_nav_bar_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/screens/home_screen.dart';
+import 'package:bloc_ecommerce_app/features/presentation/product_details/screens/products_details_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/splash/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -34,6 +35,11 @@ class RoutePages {
         path: Routes.home,
         name: Routes.home,
         pageBuilder: (context, state) => MaterialPage(child: HomeScreen()),
+      ),
+      GoRoute(
+        path: Routes.productsDetails,
+        name: Routes.productsDetails,
+        pageBuilder: (context, state) => MaterialPage(child: ProductsDetailsScreen()),
       ),
     ],
   );
