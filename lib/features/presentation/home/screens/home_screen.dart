@@ -1,3 +1,4 @@
+import 'package:bloc_ecommerce_app/core/routes/routes.dart';
 import 'package:bloc_ecommerce_app/core/services/shared_preferences/local_preferences.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_state.dart';
@@ -12,6 +13,7 @@ import 'package:bloc_ecommerce_app/features/presentation/home/widgets/view_all_h
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -125,6 +127,9 @@ class HomeScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           final productItem = state.products[index];
                           return ProductCard(
+                            onItemTap: () {
+                              context.pushNamed(Routes.productsDetails);
+                            },
                             productName: productItem.productName ?? "unknown",
                             productThumbnail: productItem.imageGallery.isNotEmpty
                                 ? productItem.imageGallery.first.url
