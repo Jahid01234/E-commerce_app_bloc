@@ -4,3 +4,7 @@ class ChangeTabEvent extends BottomNavEvent {
   final int index;
   ChangeTabEvent(this.index);
 }
+
+class ShowNavBarEvent extends BottomNavEvent {}
+
+class HideNavBarEvent extends BottomNavEvent {}

@@ -7,7 +7,6 @@ class ProductShimmerCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -39,7 +38,7 @@ class ProductShimmerCard extends StatelessWidget {
                 children: [
                   /// 🔳 Title line 1
                   Container(
-                    height: 12,
+                    height: 10,
                     width: double.infinity,
                     color: Colors.white,
                   ),
@@ -47,7 +46,7 @@ class ProductShimmerCard extends StatelessWidget {
 
                   /// 🔳 Price
                   Container(
-                    height: 14,
+                    height: 10,
                     width: 60,
                     color: Colors.white,
                   ),
