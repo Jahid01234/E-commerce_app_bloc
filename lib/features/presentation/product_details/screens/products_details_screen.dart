@@ -73,7 +73,9 @@ class ProductsDetailsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: 10),
+              //BuildProductImageGallery(imageGallery: 100)
             ],
           ),
         ),
@@ -81,3 +83,4 @@ class ProductsDetailsScreen extends StatelessWidget {
     );
   }
 }
+
