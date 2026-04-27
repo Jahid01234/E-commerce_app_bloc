@@ -9,7 +9,7 @@ class ProductsDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final layout = MediaQuery.of(context);
+    //final layout = MediaQuery.of(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
