@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class StoreRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  // brand fetch...........
   Future<List<BrandModel>> fetchBrands() async {
     final List<BrandModel> brandList = [];
     final brandsSnapshot = await _firestore.collection("brands").get();
@@ -21,6 +22,7 @@ class StoreRepository {
     return brandList;
   }
 
+  // all product fetch...........
   Future<List<ProductModel>> fetchProducts() async {
     final List<ProductModel> productList = [];
     final brandsSnapshot = await _firestore.collection("products").get();
@@ -37,21 +39,21 @@ class StoreRepository {
   }
 
 
+  // single product fetch...........
+  Future<ProductModel?> fetchSingleProduct(String productId)async{
+    try {
+      final data = await _firestore.collection("products").doc(productId).get();
+      if(data.data() != null){
+        final product = ProductModel.fromJson(data.data()!);
+        return product;
+      }
+      else {
+        return null;
+      }
+    } catch (e) {
+      throw Exception(e);
+    }
+  }
 
-  // Future<CategoryModel?> fetchSingleCategory(String categoryId)async{
-  //
-  //   try {
-  //     final data = await _firestore.collection("category").doc(categoryId).get();
-  //     if(data.data() != null){
-  //       final category = CategoryModel.fromJson(data.data()!);
-  //       return category;
-  //     }
-  //     else {
-  //       return null;
-  //     }
-  //   } catch (e) {
-  //     throw Exception(e);
-  //   }
-  //
-  // }
+
 }
