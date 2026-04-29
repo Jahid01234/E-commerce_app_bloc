@@ -18,24 +18,24 @@ class StoreRepository {
     } catch (e) {
       throw Exception(e);
     }
-
     return brandList;
   }
 
   // all product fetch...........
   Future<List<ProductModel>> fetchProducts() async {
     final List<ProductModel> productList = [];
-    final brandsSnapshot = await _firestore.collection("products").get();
 
     try {
-      for (var product in brandsSnapshot.docs) {
-        productList.add(ProductModel.fromJson(product.data()));
+      final data = await _firestore.collection('products').get();
+      for (var product in data.docs) {
+        final singleProduct = ProductModel.fromJson(product.data());
+        singleProduct.productId = product.id;
+        productList.add(singleProduct);
       }
+      return productList;
     } catch (e) {
       throw Exception(e);
     }
-
-    return productList;
   }
 
 
@@ -45,6 +45,7 @@ class StoreRepository {
       final data = await _firestore.collection("products").doc(productId).get();
       if(data.data() != null){
         final product = ProductModel.fromJson(data.data()!);
+        product.productId = data.id;
         return product;
       }
       else {
@@ -54,6 +55,8 @@ class StoreRepository {
       throw Exception(e);
     }
   }
+
+
 
 
 }

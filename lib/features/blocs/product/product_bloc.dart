@@ -20,19 +20,20 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
       }
     });
 
-    on<FetchSingleProducts>((event, emit) async {
-      emit(ProductLoading());
-      try {
-        final product = await storeRepository.fetchSingleProduct(event.productId);
-        if(product!=null) {
-          emit(SingleProductFetchSuccess(product));
-        } else{
-          emit(SingleProductFetchFailed('Unable to load product'));
-        }
-      } catch (e) {
-        debugPrint("🔥 ERROR: $e");
-        emit(SingleProductFetchFailed('Failed to load product'));
-      }
-    });
+    // on<FetchSingleProduct>((event, emit) async {
+    //   emit(ProductLoading());
+    //   try {
+    //     final product = await storeRepository.fetchSingleProduct(event.productId);
+    //     print("Fetched Product: $product");
+    //     if(product !=null) {
+    //       emit(SingleProductFetchSuccess(product));
+    //     } else{
+    //       emit(SingleProductFetchFailed('Unable to load product'));
+    //     }
+    //   } catch (e) {
+    //     debugPrint("🔥 ERROR: $e");
+    //     emit(SingleProductFetchFailed('Failed to load product'));
+    //   }
+    // });
   }
 }

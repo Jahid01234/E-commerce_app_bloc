@@ -3,7 +3,10 @@ import 'package:bloc_ecommerce_app/core/services/shared_preferences/local_prefer
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_state.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/product/product_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_state.dart';
+import 'package:bloc_ecommerce_app/features/blocs/product/single_product_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/product/single_product_event.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/brand_card.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/custom_search_bar.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/product_card.dart';
@@ -128,9 +131,10 @@ class HomeScreen extends StatelessWidget {
                           final productItem = state.products[index];
                           return ProductCard(
                             onItemTap: () {
+                              context.read<SingleProductBloc>().add(FetchSingleProduct(productId: state.products[index].productId));
                               context.pushNamed(Routes.productsDetails);
                             },
-                            productName: productItem.productName ?? "unknown",
+                            productName: productItem.productName ?? "Unknown",
                             productThumbnail: productItem.imageGallery.isNotEmpty
                                 ? productItem.imageGallery.first.url
                                 : "",

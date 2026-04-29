@@ -156,7 +156,12 @@ final List<ProductModel> dummyProducts = [
         VariantItem(title: "XL"),
       ])
     ],
-    productDetails: "Comfortable winter full sleeve t-shirt",
+    productDetails: "Stay warm, stylish, and comfortable throughout the colder days"
+        " with this premium winter full sleeve t-shirt, designed for everyday wear and "
+        "long-lasting comfort. Crafted from a high-quality, soft cotton blend fabric,"
+        " this t-shirt offers a perfect balance between warmth and breathability. The "
+        "inner brushed texture provides a cozy feel against the skin, making it ideal for"
+        " winter mornings, chilly evenings, and layering under jackets or hoodies.",
     brand: "Easy",
   ),
 

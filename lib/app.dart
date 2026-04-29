@@ -8,6 +8,7 @@ import 'package:bloc_ecommerce_app/features/blocs/brand/brand_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/login/login_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_event.dart';
+import 'package:bloc_ecommerce_app/features/blocs/product/single_product_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/register/register_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/splash/splash_cubit.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +33,7 @@ class BlocEcommerceApp extends StatelessWidget {
             BlocProvider(create: (context)=>  BottomNavBloc()),
             BlocProvider(create: (context) => BrandBloc(context.read<StoreRepository>())..add(FetchBrands())),
             BlocProvider(create: (context) => ProductBloc(context.read<StoreRepository>())..add(FetchProducts())),
+            BlocProvider(create: (context) => SingleProductBloc(context.read<StoreRepository>())),
           ],
           child: ScreenUtilInit(
             designSize: const Size(360, 690),
