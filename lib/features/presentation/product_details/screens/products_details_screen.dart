@@ -1,5 +1,7 @@
+import 'package:bloc_ecommerce_app/core/global_widgets/app_primary_button.dart';
 import 'package:bloc_ecommerce_app/core/utils/images_path.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/product/single_product_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_state.dart';
 import 'package:bloc_ecommerce_app/features/presentation/product_details/widgets/build_product_image_gallery.dart';
 import 'package:bloc_ecommerce_app/features/presentation/product_details/widgets/build_product_variant_gallery.dart';
@@ -17,7 +19,6 @@ class ProductsDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    //final layout = MediaQuery.of(context);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -37,7 +38,8 @@ class ProductsDetailsScreen extends StatelessWidget {
                       child: Stack(
                         children: [
                           CachedNetworkImage(
-                            imageUrl: state.product.imageGallery.first.url ?? ImagesPath.thumbnailImg,
+                            imageUrl: state.product.imageGallery[state.selectedImageIndex].url
+                                      ?? ImagesPath.thumbnailImg,
                             fit: BoxFit.cover,
                             width: double.infinity,
                             height: double.infinity,
@@ -51,7 +53,9 @@ class ProductsDetailsScreen extends StatelessWidget {
                                 Container(
                                   color: Colors.grey.shade100,
                                   child: const Icon(
-                                      Icons.image_not_supported, size: 40),
+                                      Icons.image_not_supported,
+                                      size: 40,
+                                  ),
                                 ),
                           ),
                           TopActionBar(
@@ -92,8 +96,16 @@ class ProductsDetailsScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(height: 30),
-                    BuildProductImageGallery(imageGallery: state.product.imageGallery),
+                    SizedBox(height: 5),
+                    BuildProductImageGallery(
+                      imageGallery: state.product.imageGallery,
+                      selectedIndex: state.selectedImageIndex,
+                      onTapImage: (index) {
+                        context.read<SingleProductBloc>().add(
+                          ChangeProductImage(index),
+                        );
+                      },
+                    ),
                     SizedBox(height: 10),
                     BuildProductVariantGallery(variant: state.product.variant),
                     SizedBox(height: 10),
@@ -116,7 +128,9 @@ class ProductsDetailsScreen extends StatelessWidget {
                         maxLines: 3,
                         expandText: 'Read more',
                         collapseText: 'Read less',
-                        linkColor: Colors.black,
+                        linkColor: theme.brightness == Brightness.dark
+                                   ? Colors.white
+                                   : Colors.black,
                         textAlign: TextAlign.justify,
                         style: TextStyle(
                           color: Colors.grey,
@@ -125,6 +139,7 @@ class ProductsDetailsScreen extends StatelessWidget {
                         ),
                       ),
                     ),
+                    SizedBox(height: 20),
                   ],
                 );
               }
@@ -137,6 +152,54 @@ class ProductsDetailsScreen extends StatelessWidget {
             }
           ),
         ),
+      ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ListTile(
+            tileColor: theme.colorScheme.surfaceVariant,
+            title: Text(
+              'Total Price',
+              style: theme.textTheme.labelLarge?.copyWith(
+                color: theme.colorScheme.onSurfaceVariant,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            subtitle: Text(
+              'with VAT,SD',
+              style: theme.textTheme.labelSmall?.copyWith(
+                color: theme.colorScheme.outline,
+                fontWeight: FontWeight.w300,
+              ),
+            ),
+            trailing: BlocBuilder<SingleProductBloc,SingleProductState>(
+                builder: (context, state) {
+                  final double vat = state is SingleProductFetchSuccess
+                      ? state.product.vatSd ?? 0.0
+                      : 0.0;
+                  debugPrint('Vat $vat');
+                  final double price = state is SingleProductFetchSuccess
+                      ? state.product.productPrice ?? 0.0
+                      : 0.0;
+                  debugPrint('Vat $price');
+                  final double totalPrice = vat + price;
+                  debugPrint('Vat $totalPrice');
+                  return Text(
+                    '\$${totalPrice.toStringAsFixed(2)}',
+                    style: theme.textTheme.labelLarge?.copyWith(
+                      color: theme.colorScheme.onSurfaceVariant,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  );
+                },
+            ),
+          ),
+          AppPrimaryButton(
+            text: "Add to Cart",
+           radius : 0,
+            onTap: () {},
+          ),
+        ],
       ),
     );
   }

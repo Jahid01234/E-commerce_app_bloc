@@ -6,13 +6,15 @@ import 'package:shimmer/shimmer.dart';
 
 class BuildProductImageGallery extends StatelessWidget {
   final List<ImageGallery>? imageGallery;
+  final int selectedIndex;
+  final Function(int) onTapImage;
 
   const BuildProductImageGallery({
     super.key,
     required this.imageGallery,
+    required this.selectedIndex,
+    required this.onTapImage,
   });
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -22,27 +24,50 @@ class BuildProductImageGallery extends StatelessWidget {
         height: 100,
         child: ListView.separated(
           physics: const BouncingScrollPhysics(),
-          itemCount: imageGallery?.length ?? 0 ,
+          itemCount: imageGallery?.length ?? 0,
           scrollDirection: Axis.horizontal,
-          separatorBuilder: (BuildContext context, int index) {
-            return SizedBox(width: 10);
-          },
+          separatorBuilder: (_, __) => const SizedBox(width: 10),
           itemBuilder: (context, index) {
-            return AspectRatio(
-              aspectRatio: 3 / 3,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: CachedNetworkImage(
-                  imageUrl: imageGallery?[index].url ?? ImagesPath.thumbnailImg ,
-                  fit: BoxFit.cover,
-                  placeholder: (context, url) => Shimmer.fromColors(
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.grey.shade100,
-                    child: Container(color: Colors.white),
+            final image = imageGallery?[index];
+
+            return GestureDetector(
+              onTap: () => onTapImage(index), // 👈 IMPORTANT
+
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+
+                    // 👇 selected হলে highlight
+                    border: Border.all(
+                      color: selectedIndex == index
+                          ? Colors.blue
+                          : Colors.transparent,
+                      width: 2,
+                    ),
                   ),
-                  errorWidget: (context, url, error) => Container(
-                    color: Colors.grey.shade100,
-                    child: const Icon(Icons.image_not_supported, size: 20),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                      image?.url ?? ImagesPath.thumbnailImg,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          Shimmer.fromColors(
+                            baseColor: Colors.grey.shade300,
+                            highlightColor: Colors.grey.shade100,
+                            child: Container(color: Colors.white),
+                          ),
+                      errorWidget: (context, url, error) =>
+                          Container(
+                            color: Colors.grey.shade100,
+                            child: const Icon(
+                              Icons.image_not_supported,
+                              size: 20,
+                            ),
+                          ),
+                    ),
                   ),
                 ),
               ),

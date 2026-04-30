@@ -66,6 +66,9 @@ class BuildProductVariantGallery extends StatelessWidget {
                       return AspectRatio(
                         aspectRatio: 1,
                         child: Card(
+                          color: theme.brightness == Brightness.dark
+                              ? Colors.grey.shade900
+                              : Colors.grey.shade50,
                           elevation: 0.2,
                           child: Center(
                             child: Text(

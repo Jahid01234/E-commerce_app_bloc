@@ -24,5 +24,15 @@ class SingleProductBloc extends Bloc<SingleProductEvent, SingleProductState> {
         emit(SingleProductFetchFailed('Failed to load product'));
       }
     });
+
+    on<ChangeProductImage>((event, emit) {
+      if (state is SingleProductFetchSuccess) {
+        final currentState = state as SingleProductFetchSuccess;
+
+        emit(currentState.copyWith(
+          selectedImageIndex: event.index,
+        ));
+      }
+    });
   }
 }

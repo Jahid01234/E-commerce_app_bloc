@@ -15,3 +15,12 @@ class FetchSingleProduct extends SingleProductEvent{
   @override
   List<Object> get props => [productId];
 }
+
+class ChangeProductImage extends SingleProductEvent {
+  final int index;
+
+  const ChangeProductImage(this.index);
+
+  @override
+  List<Object> get props => [index];
+}
