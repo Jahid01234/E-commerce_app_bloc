@@ -74,13 +74,14 @@ class AppPrimaryButton extends StatelessWidget {
               ),
               if (icon != null) ...[
                 SizedBox(width: 5.w),
-                Container(
-                  decoration: const BoxDecoration(
-                    color: Colors.black,
-                    shape: BoxShape.circle,
-                  ),
-                  child: Center(child: icon),
-                ),
+                Center(child: icon)
+                // Container(
+                //   decoration: const BoxDecoration(
+                //     color: Colors.black,
+                //     shape: BoxShape.circle,
+                //   ),
+                //   child: Center(child: icon),
+                // ),
               ],
             ],
           ),

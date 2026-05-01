@@ -31,15 +31,12 @@ class BuildProductImageGallery extends StatelessWidget {
             final image = imageGallery?[index];
 
             return GestureDetector(
-              onTap: () => onTapImage(index), // 👈 IMPORTANT
-
+              onTap: () => onTapImage(index),
               child: AspectRatio(
                 aspectRatio: 1,
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-
-                    // 👇 selected হলে highlight
                     border: Border.all(
                       color: selectedIndex == index
                           ? Colors.blue
