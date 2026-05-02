@@ -1,4 +1,5 @@
 import 'package:bloc_ecommerce_app/core/global_widgets/app_primary_button.dart';
+import 'package:bloc_ecommerce_app/core/routes/routes.dart';
 import 'package:bloc_ecommerce_app/core/utils/images_path.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_event.dart';
@@ -12,6 +13,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductsDetailsScreen extends StatelessWidget {
@@ -221,7 +223,9 @@ class ProductsDetailsScreen extends StatelessWidget {
                               ),
                               text: "Add review",
                               radius: 10,
-                              onTap: () {},
+                              onTap: () {
+                                context.goNamed(Routes.review);
+                              },
                           ),
                       ),
                     ),
