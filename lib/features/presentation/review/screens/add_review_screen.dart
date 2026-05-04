@@ -1,11 +1,12 @@
 import 'package:bloc_ecommerce_app/core/global_widgets/app_primary_button.dart';
 import 'package:bloc_ecommerce_app/core/global_widgets/custom_text_field.dart';
 import 'package:bloc_ecommerce_app/features/presentation/review/widgets/review_header_section.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class ReviewScreen extends StatelessWidget {
-  const ReviewScreen({super.key});
+class AddReviewScreen extends StatelessWidget {
+  const AddReviewScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +62,9 @@ class ReviewScreen extends StatelessWidget {
                       itemBuilder: (context, _) =>
                           Icon(Icons.star, color: Colors.amber),
                       onRatingUpdate: (rating) {
-                        print(rating);
+                        if (kDebugMode) {
+                          print(rating);
+                        }
                       },
                     ),
                     SizedBox(height: size.height * 0.1),

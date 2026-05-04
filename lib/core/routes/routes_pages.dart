@@ -4,7 +4,7 @@ import 'package:bloc_ecommerce_app/features/presentation/auth/register/screens/r
 import 'package:bloc_ecommerce_app/features/presentation/bottom_nav/screens/bottom_nav_bar_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/screens/home_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/product_details/screens/products_details_screen.dart';
-import 'package:bloc_ecommerce_app/features/presentation/review/screens/review_screen.dart';
+import 'package:bloc_ecommerce_app/features/presentation/review/screens/add_review_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/splash/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -45,7 +45,7 @@ class RoutePages {
       GoRoute(
         path: Routes.review,
         name: Routes.review,
-        pageBuilder: (context, state) => MaterialPage(child: ReviewScreen()),
+        pageBuilder: (context, state) => MaterialPage(child: AddReviewScreen()),
       ),
     ],
   );
