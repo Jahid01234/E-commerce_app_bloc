@@ -87,7 +87,7 @@ class ProductsDetailsScreen extends StatelessWidget {
                             ),
                           ),
                           TopActionBar(
-                            onBackTap: () => Navigator.pop(context),
+                            onBackTap: () => context.goNamed(Routes.bottomNavBar),
                             onCartTap: () {
                               // cart action
                             },
@@ -224,12 +224,14 @@ class ProductsDetailsScreen extends StatelessWidget {
                               text: "Add review",
                               radius: 10,
                               onTap: () {
-                                context.goNamed(Routes.review);
+                                context.goNamed(
+                                    Routes.review,
+                                    extra: {'id': state.product.productId},
+                                );
                               },
                           ),
                       ),
                     ),
-
                     SizedBox(height: 20),
                   ],
                 );
