@@ -3,10 +3,11 @@ import 'package:bloc_ecommerce_app/core/services/shared_preferences/local_prefer
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_state.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_bloc.dart';
-import 'package:bloc_ecommerce_app/features/blocs/product/product_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_state.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_event.dart';
+import 'package:bloc_ecommerce_app/features/blocs/review/review_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/review/review_event.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/brand_card.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/custom_search_bar.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/widgets/product_card.dart';
@@ -132,6 +133,7 @@ class HomeScreen extends StatelessWidget {
                           return ProductCard(
                             onItemTap: () {
                               context.read<SingleProductBloc>().add(FetchSingleProduct(productId: state.products[index].productId));
+                              context.read<ReviewBloc>().add(FetchReviews(productId: state.products[index].productId));
                               context.pushNamed(Routes.productsDetails);
                             },
                             productName: productItem.productName ?? "Unknown",

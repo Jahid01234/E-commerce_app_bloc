@@ -4,10 +4,13 @@ import 'package:bloc_ecommerce_app/core/utils/images_path.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_state.dart';
+import 'package:bloc_ecommerce_app/features/blocs/review/review_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/review/review_state.dart';
 import 'package:bloc_ecommerce_app/features/presentation/product_details/widgets/build_product_image_gallery.dart';
 import 'package:bloc_ecommerce_app/features/presentation/product_details/widgets/build_product_variant_gallery.dart';
 import 'package:bloc_ecommerce_app/features/presentation/product_details/widgets/product_details_shimmer_card.dart';
 import 'package:bloc_ecommerce_app/features/presentation/product_details/widgets/review_card.dart';
+import 'package:bloc_ecommerce_app/features/presentation/product_details/widgets/review_shimmer_card.dart';
 import 'package:bloc_ecommerce_app/features/presentation/product_details/widgets/top_action_bar.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:expandable_text/expandable_text.dart';
@@ -17,30 +20,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ProductsDetailsScreen extends StatelessWidget {
-  ProductsDetailsScreen({super.key});
-  final List<Map<String, dynamic>> reviews = [
-    {
-      "name": "Ronald Richards",
-      "date": "13 Sep, 2020",
-      "rating": 4.8,
-      "review": "Lorem ipsum dolor sit amet...",
-      "image": "https://i.pravatar.cc/150?img=1",
-    },
-    {
-      "name": "John Doe",
-      "date": "15 Sep, 2020",
-      "rating": 4.5,
-      "review": "Very good product!",
-      "image": "https://i.pravatar.cc/150?img=2",
-    },
-    {
-      "name": "Alex Smith",
-      "date": "20 Sep, 2020",
-      "rating": 5.0,
-      "review": "Excellent quality! Highly recommended.Excellent quality!",
-      "image": "https://i.pravatar.cc/150?img=3",
-    },
-  ];
+  const ProductsDetailsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +45,7 @@ class ProductsDetailsScreen extends StatelessWidget {
                         children: [
                           CachedNetworkImage(
                             imageUrl:
-                                state
-                                    .product
-                                    .imageGallery[state.selectedImageIndex]
-                                    .url ??
+                                state.product.imageGallery[state.selectedImageIndex].url ??
                                 ImagesPath.thumbnailImg,
                             fit: BoxFit.cover,
                             width: double.infinity,
@@ -191,22 +168,35 @@ class ProductsDetailsScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 10),
-                    ListView.builder(
-                      padding: EdgeInsets.zero,
-                      itemCount: reviews.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        final data = reviews[index];
+                    BlocBuilder<ReviewBloc,ReviewState>(
+                      builder: (context, state) {
+                        if(state is ReviewLoading) {
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: 5,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (_, __) => const ReviewShimmerCard(),
+                          );
+                        }
 
-                        return ReviewCard(
-                          name: data["name"],
-                          date: data["date"],
-                          rating: data["rating"],
-                          review: data["review"],
-                          imageUrl: data["image"],
-                        );
-                      },
+                        if(state is ReviewSuccess) {
+                          return ListView.builder(
+                            padding: EdgeInsets.zero,
+                            itemCount: state.reviews.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              final data = state.reviews[index];
+                              return ReviewCard(
+                                reviewModel: data,
+                              );
+                            },
+                          );
+                        }
+
+                        return const SizedBox();
+                      }
                     ),
                     SizedBox(height: 30),
                     Padding(

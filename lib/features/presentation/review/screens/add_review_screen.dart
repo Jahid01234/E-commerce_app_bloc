@@ -16,7 +16,7 @@ class AddReviewScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final extra = GoRouterState.of(context).extra as Map<String, dynamic>;
     final String productId = extra['id'] ;
-    debugPrint("Likeeeeeeeeeeeee....$productId");
+    // debugPrint("Likeeeeeeeeeeeee....$productId");
     final size = MediaQuery.of(context).size;
     final theme = Theme.of(context);
 

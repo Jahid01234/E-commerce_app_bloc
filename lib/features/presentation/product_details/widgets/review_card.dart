@@ -1,24 +1,24 @@
+import 'package:bloc_ecommerce_app/core/data/models/review_model.dart';
 import 'package:expandable_text/expandable_text.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReviewCard extends StatelessWidget {
-  final String name;
-  final String date;
-  final double rating;
-  final String review;
-  final String imageUrl;
+  final ReviewModel reviewModel;
 
   const ReviewCard({
     super.key,
-    required this.name,
-    required this.date,
-    required this.rating,
-    required this.review,
-    required this.imageUrl,
+    required this.reviewModel
   });
 
   @override
   Widget build(BuildContext context) {
+    final double rating = reviewModel.rating ?? 0;
+    final String formattedDate = reviewModel.createdAt != null
+        ? DateFormat('dd MMM yyyy').format(reviewModel.createdAt!)
+        : 'Unknown date';
+    final bool hasImage = reviewModel.userProfileImage != null &&
+        reviewModel.userProfileImage!.isNotEmpty;
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4, horizontal: 20),
       padding: const EdgeInsets.all(12),
@@ -46,14 +46,21 @@ class ReviewCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CircleAvatar(radius: 22, backgroundImage: NetworkImage(imageUrl)),
+              CircleAvatar(
+                radius: 22,
+                backgroundImage:
+                hasImage ? NetworkImage(reviewModel.userProfileImage!) : null,
+                child: !hasImage
+                    ? const Icon(Icons.person, size: 22)
+                    : null,
+              ),
               const SizedBox(width: 10),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      name,
+                      reviewModel.userName ?? "Anonymous",
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16,
@@ -69,7 +76,7 @@ class ReviewCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          date,
+                          formattedDate,
                           style: TextStyle(
                             fontSize: 12,
                             color: Colors.grey.shade600,
@@ -108,7 +115,7 @@ class ReviewCard extends StatelessWidget {
           ),
           const SizedBox(height: 10),
           ExpandableText(
-            review,
+            reviewModel.reviewText ?? "No review provided",
             maxLines: 3,
             expandText: 'Read more',
             collapseText: 'Read less',
