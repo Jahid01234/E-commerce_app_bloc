@@ -5,12 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class StoreRepository {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
   // brand fetch...........
   Future<List<BrandModel>> fetchBrands() async {
     final List<BrandModel> brandList = [];
-    final brandsSnapshot = await _firestore.collection("brands").get();
+    final brandsSnapshot = await _fireStore.collection("brands").get();
 
     try {
       for (var brand in brandsSnapshot.docs) {
@@ -27,7 +27,7 @@ class StoreRepository {
     final List<ProductModel> productList = [];
 
     try {
-      final data = await _firestore.collection('products').get();
+      final data = await _fireStore.collection('products').get();
       for (var product in data.docs) {
         final singleProduct = ProductModel.fromJson(product.data());
         singleProduct.productId = product.id;
@@ -43,7 +43,7 @@ class StoreRepository {
   // single product fetch...........
   Future<ProductModel?> fetchSingleProduct(String productId)async{
     try {
-      final data = await _firestore.collection("products").doc(productId).get();
+      final data = await _fireStore.collection("products").doc(productId).get();
       if(data.data() != null){
         final product = ProductModel.fromJson(data.data()!);
         product.productId = data.id;
@@ -60,7 +60,7 @@ class StoreRepository {
   // submit product review...........
   Future<ReviewModel?> submitProductReview(ReviewModel review)async{
     try {
-      final data = await _firestore.collection("products").doc(review.productId)
+      final data = await _fireStore.collection("products").doc(review.productId)
           .collection("reviews").add(review.toJson());
       final document = await data.get();
 
@@ -81,7 +81,7 @@ class StoreRepository {
     final List<ReviewModel> reviewList = [];
 
     try {
-      final data = await _firestore.collection("products").doc(productId)
+      final data = await _fireStore.collection("products").doc(productId)
           .collection("reviews").get();
 
       if(data.docs.isNotEmpty){

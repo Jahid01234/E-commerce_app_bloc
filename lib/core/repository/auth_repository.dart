@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class AuthRepository{
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
   // sign up ..............
   Future<User?> signUpWithEmail(
@@ -54,7 +54,7 @@ class AuthRepository{
         email: user.email,
         photoUrl: user.photoURL,
         phoneNumber: user.phoneNumber);
-    await _firestore
+    await _fireStore
         .collection('users')
         .doc(user.uid)
         .set(data.toJson())

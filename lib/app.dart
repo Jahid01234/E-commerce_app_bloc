@@ -1,4 +1,5 @@
 import 'package:bloc_ecommerce_app/core/repository/auth_repository.dart';
+import 'package:bloc_ecommerce_app/core/repository/cart_repository.dart';
 import 'package:bloc_ecommerce_app/core/repository/store_repository.dart';
 import 'package:bloc_ecommerce_app/core/routes/routes_pages.dart';
 import 'package:bloc_ecommerce_app/core/theme/theme.dart';
@@ -12,7 +13,6 @@ import 'package:bloc_ecommerce_app/features/blocs/product/single_product_bloc.da
 import 'package:bloc_ecommerce_app/features/blocs/register/register_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/review/add_review_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/review/review_bloc.dart';
-import 'package:bloc_ecommerce_app/features/blocs/review/review_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/splash/splash_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +27,7 @@ class BlocEcommerceApp extends StatelessWidget {
       providers: [
         RepositoryProvider(create: (context)=> AuthRepository()),
         RepositoryProvider(create: (context)=> StoreRepository()),
+        RepositoryProvider(create: (context)=> CartRepository()),
       ],
       child: MultiBlocProvider(
           providers: [
