@@ -7,18 +7,15 @@ class CartRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   // Add product to cart...................
-  Future<CartModel?> addProductToCart(CartModel item) async {
+  Future<void> addProductToCart(CartModel item) async {
     try {
-      final ref = await _fireStore
+      await _fireStore
           .collection("users")
           .doc(_auth.currentUser!.uid)
           .collection("cart")
-          .add(item.toJson());
-      final result = await ref.get();
-      if (result.data() != null) {
-        return CartModel.fromJson(result.data()!);
-      }
-      return null;
+          .doc(item.product.productId)
+          .set(item.toJson());
+
     } catch (e) {
       throw Exception(e);
     }

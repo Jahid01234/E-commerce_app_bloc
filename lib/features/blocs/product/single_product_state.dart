@@ -9,25 +9,32 @@ class SingleProductState extends Equatable{
 }
 
 class SingleProductLoading extends SingleProductState {}
+
 class SingleProductInitial extends SingleProductState{}
 
 class SingleProductFetchSuccess extends SingleProductState {
   final ProductModel product;
   final int selectedImageIndex;
+  final int selectedSizeIndex;
 
   const SingleProductFetchSuccess(
-    this.product, {this.selectedImageIndex = 0}
+    this.product, {
+      this.selectedImageIndex = 0,
+        this.selectedSizeIndex = 0,
+      }
       );
 
   @override
-  List<Object?> get props => [product, selectedImageIndex];
+  List<Object?> get props => [product, selectedImageIndex,selectedSizeIndex];
 
   SingleProductFetchSuccess copyWith({
     int? selectedImageIndex,
+    int? selectedSizeIndex,
   }) {
     return SingleProductFetchSuccess(
       product,
       selectedImageIndex: selectedImageIndex ?? this.selectedImageIndex,
+      selectedSizeIndex: selectedSizeIndex ?? this.selectedSizeIndex,
     );
   }
 }

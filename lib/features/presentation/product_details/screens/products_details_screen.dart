@@ -1,6 +1,10 @@
+import 'package:bloc_ecommerce_app/core/data/models/cart_model.dart';
 import 'package:bloc_ecommerce_app/core/global_widgets/app_primary_button.dart';
 import 'package:bloc_ecommerce_app/core/routes/routes.dart';
 import 'package:bloc_ecommerce_app/core/utils/images_path.dart';
+import 'package:bloc_ecommerce_app/features/blocs/cart/add_cart_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/cart/add_cart_event.dart';
+import 'package:bloc_ecommerce_app/features/blocs/cart/add_cart_state.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/single_product_state.dart';
@@ -111,7 +115,15 @@ class ProductsDetailsScreen extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 10),
-                    BuildProductVariantGallery(variant: state.product.variant),
+                    BuildProductVariantGallery(
+                      variant: state.product.variant,
+                      selectedIndex: state.selectedSizeIndex,
+                      onTap: (index) {
+                        context.read<SingleProductBloc>().add(
+                          ChangeVariantSize(index),
+                        );
+                      },
+                    ),
                     SizedBox(height: 10),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -277,7 +289,51 @@ class ProductsDetailsScreen extends StatelessWidget {
               },
             ),
           ),
-          AppPrimaryButton(text: "Add to Cart", radius: 0, onTap: () {}),
+          BlocConsumer<AddCartBloc, AddCartState>(
+            listener: (context, state) {
+              if (state is AddCartProductSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text("Added to cart")),
+                );
+              }
+              if (state is AddCartProductFailed) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("Failed added to cart product!")),
+                );
+              }
+            },
+            builder: (context, state) {
+              return AppPrimaryButton(
+                text: "Add to Cart",
+                radius: 0,
+                isLoading: state is AddCartLoading,
+                onTap: () {
+                  if (state is AddCartLoading) return;
+                  final currentState = context.read<SingleProductBloc>().state;
+                  if (currentState is SingleProductFetchSuccess) {
+                    final product = currentState.product;
+                    final selectedSizeIndex = currentState.selectedSizeIndex;
+
+                    if (product.variant.isEmpty) return;
+                    final variantItems = product.variant[0].items;
+                    if (variantItems.isEmpty || selectedSizeIndex >= variantItems.length) return;
+
+                    final variantItem = variantItems[selectedSizeIndex];
+
+                    context.read<AddCartBloc>().add(
+                      AddProductCartButton(
+                        cartProduct: CartModel(
+                          quantity: 1,
+                          variant: variantItem,
+                          product: product,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              );
+            },
+          ),
         ],
       ),
     );

@@ -24,3 +24,12 @@ class ChangeProductImage extends SingleProductEvent {
   @override
   List<Object> get props => [index];
 }
+
+class ChangeVariantSize extends SingleProductEvent {
+  final int indexSize;
+
+  const ChangeVariantSize(this.indexSize);
+
+  @override
+  List<Object> get props => [indexSize];
+}

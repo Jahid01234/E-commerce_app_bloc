@@ -13,14 +13,13 @@ class SingleProductBloc extends Bloc<SingleProductEvent, SingleProductState> {
       emit(SingleProductLoading());
       try {
         final product = await storeRepository.fetchSingleProduct(event.productId);
-        print("Fetched Product: $product");
+        debugPrint("Fetched Product: $product");
         if(product !=null) {
           emit(SingleProductFetchSuccess(product));
         } else{
           emit(SingleProductFetchFailed('Unable to load product'));
         }
       } catch (e) {
-        debugPrint("🔥 ERROR: $e");
         emit(SingleProductFetchFailed('Failed to load product'));
       }
     });
@@ -31,6 +30,17 @@ class SingleProductBloc extends Bloc<SingleProductEvent, SingleProductState> {
 
         emit(currentState.copyWith(
           selectedImageIndex: event.index,
+        ));
+      }
+    });
+
+
+    on<ChangeVariantSize>((event, emit) {
+      if (state is SingleProductFetchSuccess) {
+        final currentState = state as SingleProductFetchSuccess;
+
+        emit(currentState.copyWith(
+          selectedSizeIndex: event.indexSize,
         ));
       }
     });

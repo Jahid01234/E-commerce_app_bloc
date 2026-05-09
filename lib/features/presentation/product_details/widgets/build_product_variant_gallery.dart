@@ -3,33 +3,35 @@ import 'package:flutter/material.dart';
 
 class BuildProductVariantGallery extends StatelessWidget {
   final List<Variant>? variant;
+  final int selectedIndex;
+  final Function(int) onTap;
 
   const BuildProductVariantGallery({
     super.key,
     required this.variant,
+    required this.selectedIndex,
+    required this.onTap,
   });
-
-
 
   @override
   Widget build(BuildContext context) {
     final layout = MediaQuery.of(context);
     final theme = Theme.of(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(
           variant?.length ?? 0,
-              (index) {
-            final variantItem = variant![index];
+              (vIndex) {
+            final variantItem = variant![vIndex];
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-                /// Title
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -37,45 +39,45 @@ class BuildProductVariantGallery extends StatelessWidget {
                       variantItem.category ?? '',
                       style: theme.textTheme.titleMedium?.copyWith(
                         fontSize: 18,
-                        color: theme.colorScheme.onBackground,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Text(
+                    const Text(
                       'Size Guide',
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: Colors.grey,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: TextStyle(color: Colors.grey),
                     ),
                   ],
                 ),
 
-                /// Items List
                 SizedBox(
                   height: layout.size.width * 0.16,
                   child: ListView.separated(
-                    physics: const BouncingScrollPhysics(),
                     scrollDirection: Axis.horizontal,
                     itemCount: variantItem.items.length,
-                    separatorBuilder: (_, __) {
-                      return SizedBox(width: 10);
-                    },
+                    separatorBuilder: (_, __) => const SizedBox(width: 10),
                     itemBuilder: (context, index) {
                       final item = variantItem.items[index];
-                      return AspectRatio(
-                        aspectRatio: 1,
-                        child: Card(
-                          color: theme.brightness == Brightness.dark
-                              ? Colors.grey.shade900
-                              : Colors.grey.shade50,
-                          elevation: 0.2,
-                          child: Center(
-                            child: Text(
-                              item.title ?? '',
-                              style: theme.textTheme.titleLarge?.copyWith(
-                                fontSize: 15,
-                                fontWeight: FontWeight.w600,
+
+                      //final isSelected = index == selectedIndex;
+
+                      return GestureDetector(
+                        onTap: () => onTap(index),
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Card(
+                            color: selectedIndex == index
+                                ? theme.colorScheme.primary
+                                : (theme.brightness == Brightness.dark
+                                ? Colors.grey.shade900
+                                : Colors.grey.shade50),
+                            child: Center(
+                              child: Text(
+                                item.title ?? '',
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
+                                  color: selectedIndex == index ? Colors.white : null,
+                                ),
                               ),
                             ),
                           ),
