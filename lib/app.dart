@@ -7,6 +7,8 @@ import 'package:bloc_ecommerce_app/features/blocs/bottom_nav/bottom_nav_bloc.dar
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/cart/add_cart_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/cart/cart_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/cart/cart_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/login/login_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_event.dart';
@@ -42,6 +44,7 @@ class BlocEcommerceApp extends StatelessWidget {
             BlocProvider(create: (context) => AddReviewBloc(context.read<StoreRepository>())),
             BlocProvider(create: (context) => ReviewBloc(context.read<StoreRepository>())),
             BlocProvider(create: (context) => AddCartBloc(context.read<CartRepository>())),
+            BlocProvider(create: (context) => CartBloc(context.read<CartRepository>())..add(FetchCartProduct())),
           ],
           child: ScreenUtilInit(
             designSize: const Size(360, 690),

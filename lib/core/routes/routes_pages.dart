@@ -2,6 +2,7 @@ import 'package:bloc_ecommerce_app/core/routes/routes.dart';
 import 'package:bloc_ecommerce_app/features/presentation/auth/login/screens/login_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/auth/register/screens/register_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/bottom_nav/screens/bottom_nav_bar_screen.dart';
+import 'package:bloc_ecommerce_app/features/presentation/cart/screens/cart_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/screens/home_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/product_details/screens/products_details_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/review/screens/add_review_screen.dart';
@@ -46,6 +47,11 @@ class RoutePages {
         path: Routes.review,
         name: Routes.review,
         pageBuilder: (context, state) => MaterialPage(child: AddReviewScreen()),
+      ),
+      GoRoute(
+        path: Routes.cart,
+        name: Routes.cart,
+        pageBuilder: (context, state) => MaterialPage(child: CartScreen()),
       ),
     ],
   );

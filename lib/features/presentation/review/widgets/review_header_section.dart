@@ -5,10 +5,10 @@ import 'package:go_router/go_router.dart';
 
 
 
-class ReviewHeaderSection extends StatelessWidget {
+class CartHeaderSection extends StatelessWidget {
   final ThemeData theme;
 
-  const ReviewHeaderSection({
+  const CartHeaderSection({
     super.key,
     required this.theme,
   });

@@ -27,7 +27,7 @@ class AddReviewScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: size.height * 0.05),
-            ReviewHeaderSection(theme: theme),
+            CartHeaderSection(theme: theme),
             Expanded(
               child: SingleChildScrollView(
                 child: BlocConsumer<AddReviewBloc, AddReviewState>(

@@ -192,7 +192,16 @@ class ProductsDetailsScreen extends StatelessWidget {
                           );
                         }
 
+
                         if(state is ReviewSuccess) {
+                          if (state.reviews.isEmpty) {
+                            return const Center(
+                              child: Text(
+                                "There is no review here",
+                                style: TextStyle(fontSize: 15),
+                              ),
+                            );
+                          }
                           return ListView.builder(
                             padding: EdgeInsets.zero,
                             itemCount: state.reviews.length,
