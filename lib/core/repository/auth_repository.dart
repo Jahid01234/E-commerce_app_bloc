@@ -70,5 +70,12 @@ class AuthRepository{
     LocalPreferences.setString('phoneNumber', user.phoneNumber ?? '');
   }
 
+  // user sign out...............
+  Future<void> signOutUser() async {
+    await _auth.signOut();
+    await LocalPreferences.clear();
+  }
+
+
 
 }

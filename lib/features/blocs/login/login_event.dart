@@ -21,3 +21,4 @@ class RequestEmailLogin extends LoginEvent {
 }
 
 class TogglePasswordVisibility extends LoginEvent {}
+

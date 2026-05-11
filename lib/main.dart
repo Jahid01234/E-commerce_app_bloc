@@ -12,7 +12,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   Bloc.observer = BlocEcommerceObserver();
-  await LocalPreferences().init();
+  await LocalPreferences.init();
   runApp(const BlocEcommerceApp());
 }
 

@@ -13,8 +13,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       emit(CartLoading());
       try {
         final result = await cartRepository.fetchProductsFromCart();
-        emit(CartProductSuccess(cartProduct: result));
-        debugPrint("Cart product:$result");
+        emit(CartProductSuccess(result));
+        debugPrint("Cart product................:$result");
       } catch (e) {
         emit(CartProductFailed("Failed added to cart!"));
       }
