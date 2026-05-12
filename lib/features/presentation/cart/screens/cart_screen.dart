@@ -23,7 +23,6 @@ class CartScreen extends StatelessWidget {
           children: [
             SizedBox(height: size.height * 0.05),
             CartHeaderSection(theme: theme),
-
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
