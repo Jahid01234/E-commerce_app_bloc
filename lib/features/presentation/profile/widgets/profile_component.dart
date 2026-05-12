@@ -29,12 +29,11 @@ class ProfileComponentTile extends StatelessWidget {
     return GestureDetector(
       onTap: showSwitch ? null : onTap,
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        height: 60,
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         decoration: BoxDecoration(
-          border: Border.all(
-            color: Colors.grey.withValues(alpha: 0.3),
-          ),
+          border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Row(
@@ -42,7 +41,11 @@ class ProfileComponentTile extends StatelessWidget {
             Icon(
               icon,
               size: 22,
-              color: iconColor ?? Colors.black54,
+              color:
+                  iconColor ??
+                  (Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.grey),
             ),
             const SizedBox(width: 16),
 
@@ -52,7 +55,11 @@ class ProfileComponentTile extends StatelessWidget {
                 title,
                 style: TextStyle(
                   fontSize: 15,
-                  color: titleColor ?? Colors.black,
+                  color:
+                      titleColor ??
+                      (Theme.of(context).brightness == Brightness.dark
+                          ? Colors.white
+                          : Colors.black),
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -62,9 +69,11 @@ class ProfileComponentTile extends StatelessWidget {
             if (trailingText != null)
               Text(
                 trailingText!,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
-                  color: Colors.black54,
+                  color: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.white
+                      : Colors.black,
                 ),
               ),
 
@@ -81,10 +90,12 @@ class ProfileComponentTile extends StatelessWidget {
 
             // Arrow
             if (!showSwitch)
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios,
                 size: 18,
-                color: Colors.black38,
+                color: Theme.of(context).brightness == Brightness.dark
+                    ? Colors.white
+                    : Colors.grey,
               ),
           ],
         ),

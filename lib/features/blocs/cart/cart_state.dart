@@ -20,6 +20,8 @@ class CartProductSuccess extends CartState{
   List<Object?> get props => [cartProduct];
 }
 
+
+
 class CartProductFailed extends CartState{
   final String message;
   const CartProductFailed(this.message);

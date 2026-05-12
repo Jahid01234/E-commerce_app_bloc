@@ -27,10 +27,8 @@ class CartScreen extends StatelessWidget {
             Expanded(
               child: RefreshIndicator(
                 onRefresh: () async {
-                  context.read<CartBloc>().add(FetchCartProduct());
-                  await context.read<CartBloc>().stream.firstWhere(
-                        (state) => state is CartProductSuccess || state is CartProductFailed,
-                  );
+                   context.read<CartBloc>().add(FetchCartProduct());
+                   await Future.delayed(const Duration(seconds: 2));
                 },
 
                 child: BlocBuilder<CartBloc, CartState>(

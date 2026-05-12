@@ -24,9 +24,15 @@ class CartRepository {
   // Fetch products from cart................
   Future<List<CartModel>> fetchProductsFromCart() async {
     try {
+      final user = _auth.currentUser;
+
+      if (user == null) {
+        throw Exception("User not logged in");
+      }
+
       final ref = await _fireStore
           .collection("users")
-          .doc(_auth.currentUser!.uid)
+          .doc(user.uid)
           .collection("cart")
           .get();
 
@@ -35,7 +41,7 @@ class CartRepository {
           .toList();
 
     } catch (e) {
-      throw Exception(e);
+      throw Exception(e.toString());
     }
   }
 
