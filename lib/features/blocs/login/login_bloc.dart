@@ -16,6 +16,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(LoginLoading());
       try {
         await repository.signInWithEmail(event.email, event.password);
+        emailController.clear();
+        passwordController.clear();
         emit(LoginSuccess());
       } catch (e) {
         emit(LoginFailed(e.toString()));
@@ -30,7 +32,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       emit(LoginInitial(isPasswordVisible: !isCurrentlyVisible));
     });
+
+    on<ClearLoginFields>((event, emit) {
+      emailController.clear();
+      passwordController.clear();
+      emit(LoginInitial(isPasswordVisible: false));
+    });
+
   }
+
 
   @override
   Future<void> close() {

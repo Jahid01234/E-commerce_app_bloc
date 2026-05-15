@@ -17,6 +17,7 @@ class AuthRepository{
           email: email, password: password);
       final user = credential.user;
       if (user != null) {
+         await user.updateDisplayName(username);
          await createUserInDatabase(user, username);
       }
       return user;
@@ -79,3 +80,4 @@ class AuthRepository{
 
 
 }
+

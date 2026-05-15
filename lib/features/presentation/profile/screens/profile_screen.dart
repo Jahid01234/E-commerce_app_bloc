@@ -1,6 +1,8 @@
 import 'package:bloc_ecommerce_app/core/repository/auth_repository.dart';
 import 'package:bloc_ecommerce_app/core/routes/routes.dart';
 import 'package:bloc_ecommerce_app/core/services/shared_preferences/local_preferences.dart';
+import 'package:bloc_ecommerce_app/features/blocs/login/login_bloc.dart';
+import 'package:bloc_ecommerce_app/features/blocs/login/login_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/theme/theme_cubit.dart';
 import 'package:bloc_ecommerce_app/features/presentation/profile/widgets/profile_component.dart';
 import 'package:cached_network_image/cached_network_image.dart';
