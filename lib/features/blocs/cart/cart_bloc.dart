@@ -12,8 +12,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<FetchCartProduct>((event, emit) async {
       emit(CartLoading());
       try {
-        final result = await cartRepository.fetchProductsFromCart()
-                      .timeout(const Duration(seconds: 10));
+        final result = await cartRepository.fetchProductsFromCart();
         emit(CartProductSuccess(result));
         debugPrint("Cart product................:$result");
       } catch (e) {
