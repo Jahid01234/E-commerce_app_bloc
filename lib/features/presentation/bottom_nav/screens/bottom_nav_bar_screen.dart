@@ -2,6 +2,7 @@ import 'package:bloc_ecommerce_app/features/blocs/bottom_nav/bottom_nav_bloc.dar
 import 'package:bloc_ecommerce_app/features/blocs/bottom_nav/bottom_nav_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/bottom_nav/bottom_nav_state.dart';
 import 'package:bloc_ecommerce_app/features/presentation/cart/screens/cart_screen.dart';
+import 'package:bloc_ecommerce_app/features/presentation/favourite/screens/favourite_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/home/screens/home_screen.dart';
 import 'package:bloc_ecommerce_app/features/presentation/profile/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,7 @@ class BottomNavBarScreen extends StatelessWidget {
 
   final List<Widget> screens = const [
     HomeScreen(),
+    FavouriteScreen(),
     CartScreen(),
     ProfileScreen(),
   ];
@@ -67,6 +69,10 @@ class BottomNavBarScreen extends StatelessWidget {
                       BottomNavigationBarItem(
                         icon: Icon(Icons.home),
                         label: "Home",
+                      ),
+                      BottomNavigationBarItem(
+                        icon: Icon(Icons.favorite_border),
+                        label: "Favourite",
                       ),
                       BottomNavigationBarItem(
                         icon: Icon(Icons.shopping_cart),

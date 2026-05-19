@@ -10,6 +10,7 @@ class ProductCard extends StatelessWidget {
   final void Function()? onItemTap;
   final void Function()? onItemDoubleTap;
 
+
   const ProductCard({
     super.key,
     required this.productName,

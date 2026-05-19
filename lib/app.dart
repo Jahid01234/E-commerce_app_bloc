@@ -1,5 +1,6 @@
 import 'package:bloc_ecommerce_app/core/repository/auth_repository.dart';
 import 'package:bloc_ecommerce_app/core/repository/cart_repository.dart';
+import 'package:bloc_ecommerce_app/core/repository/favourite_repository.dart';
 import 'package:bloc_ecommerce_app/core/repository/store_repository.dart';
 import 'package:bloc_ecommerce_app/core/routes/routes_pages.dart';
 import 'package:bloc_ecommerce_app/core/theme/theme.dart';
@@ -32,6 +33,7 @@ class BlocEcommerceApp extends StatelessWidget {
         RepositoryProvider(create: (context)=> AuthRepository()),
         RepositoryProvider(create: (context)=> StoreRepository()),
         RepositoryProvider(create: (context)=> CartRepository()),
+        RepositoryProvider(create: (context)=> FavouriteRepository()),
       ],
       child: MultiBlocProvider(
           providers: [
