@@ -24,12 +24,18 @@ class FavouriteToggled extends AddFavouriteState {
   List<Object?> get props => [productId, isFavourite];
 }
 
-class AddFavouriteProductSuccess extends AddFavouriteState{}
+class FavouriteLoaded extends AddFavouriteState {
+  final Set<String> favouriteIds;
 
-class AddFavouriteProductFailed extends AddFavouriteState{
+  const FavouriteLoaded(this.favouriteIds);
+
+  @override
+  List<Object?> get props => [favouriteIds];
+}
+
+class AddFavouriteProductFailed extends AddFavouriteState {
   final String message;
   const AddFavouriteProductFailed(this.message);
-
 
   @override
   List<Object?> get props => [message];

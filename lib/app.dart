@@ -10,6 +10,7 @@ import 'package:bloc_ecommerce_app/features/blocs/brand/brand_event.dart';
 import 'package:bloc_ecommerce_app/features/blocs/cart/add_cart_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/cart/cart_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/cart/cart_event.dart';
+import 'package:bloc_ecommerce_app/features/blocs/favourite/add_favourite_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/login/login_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_bloc.dart';
 import 'package:bloc_ecommerce_app/features/blocs/product/product_event.dart';
@@ -48,6 +49,7 @@ class BlocEcommerceApp extends StatelessWidget {
             BlocProvider(create: (context) => ReviewBloc(context.read<StoreRepository>())),
             BlocProvider(create: (context) => AddCartBloc(context.read<CartRepository>())),
             BlocProvider(create: (context) => CartBloc(context.read<CartRepository>())..add(FetchCartProduct())),
+            BlocProvider(create: (context) => AddFavouriteBloc(context.read<FavouriteRepository>())),
             BlocProvider(create: (context) =>  ThemeCubit()..loadTheme()),
           ],
           child: ScreenUtilInit(

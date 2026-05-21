@@ -1,4 +1,3 @@
-import 'package:bloc_ecommerce_app/core/data/models/favourite_model.dart';
 import 'package:bloc_ecommerce_app/core/routes/routes.dart';
 import 'package:bloc_ecommerce_app/core/services/shared_preferences/local_preferences.dart';
 import 'package:bloc_ecommerce_app/features/blocs/brand/brand_bloc.dart';
@@ -133,8 +132,12 @@ class HomeScreen extends StatelessWidget {
                           final productItem = state.products[index];
                           return ProductCard(
                             onItemTap: () {
-                              context.read<SingleProductBloc>().add(FetchSingleProduct(productId: state.products[index].productId));
-                              context.read<ReviewBloc>().add(FetchReviews(productId: state.products[index].productId));
+                              context.read<SingleProductBloc>().add(
+                                  FetchSingleProduct(productId: state.products[index].productId)
+                              );
+                              context.read<ReviewBloc>().add(
+                                  FetchReviews(productId: state.products[index].productId)
+                              );
                               context.pushNamed(Routes.productsDetails);
                             },
                             productName: productItem.productName ?? "Unknown",
@@ -155,6 +158,7 @@ class HomeScreen extends StatelessWidget {
                   }
                 ),
               ),
+
               SizedBox(height: 30.h),
             ],
           ),

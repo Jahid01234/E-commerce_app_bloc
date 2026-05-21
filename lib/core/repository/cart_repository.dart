@@ -22,26 +22,56 @@ class CartRepository {
   }
 
   // Fetch products from cart................
+  // Future<List<CartModel>> fetchProductsFromCart() async {
+  //   try {
+  //     final user = _auth.currentUser;
+  //
+  //     if (user == null) {
+  //       throw Exception("User not logged in");
+  //     }
+  //
+  //     final ref = await _fireStore
+  //         .collection("users")
+  //         .doc(user.uid)
+  //         .collection("cart")
+  //         .get();
+  //
+  //     return ref.docs
+  //         .map((doc) => CartModel.fromJson(doc.data()))
+  //         .toList();
+  //
+  //   } catch (e) {
+  //     throw Exception(e.toString());
+  //   }
+  // }
   Future<List<CartModel>> fetchProductsFromCart() async {
     try {
       final user = _auth.currentUser;
+
+      print("👉 UID: ${user?.uid}");
 
       if (user == null) {
         throw Exception("User not logged in");
       }
 
+      print("👉 Before Firestore call");
+
       final ref = await _fireStore
           .collection("users")
           .doc(user.uid)
           .collection("cart")
-          .get();
+          .get()
+          .timeout(const Duration(seconds: 10));
 
-      return ref.docs
-          .map((doc) => CartModel.fromJson(doc.data()))
-          .toList();
+      print("👉 After Firestore call: ${ref.docs.length}");
+
+      return ref.docs.map((doc) {
+        return CartModel.fromJson(doc.data());
+      }).toList();
 
     } catch (e) {
-      throw Exception(e.toString());
+      print("❌ Repo Error: $e");
+      rethrow;
     }
   }
 

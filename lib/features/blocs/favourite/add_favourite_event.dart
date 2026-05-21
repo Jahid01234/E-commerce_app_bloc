@@ -8,17 +8,6 @@ abstract class AddFavouriteEvent extends Equatable{
   List<Object?> get props => [];
 }
 
-// class AddProductFavouriteButton extends AddFavouriteEvent{
-//   final FavouriteModel favouriteProduct;
-//
-//   const AddProductFavouriteButton({
-//     required this.favouriteProduct,
-//   });
-//
-//   @override
-//   List<Object?> get props => [favouriteProduct];
-// }
-
 class ToggleFavouriteEvent extends AddFavouriteEvent {
   final FavouriteModel favouriteProduct;
 
@@ -27,3 +16,5 @@ class ToggleFavouriteEvent extends AddFavouriteEvent {
   @override
   List<Object?> get props => [favouriteProduct];
 }
+
+
